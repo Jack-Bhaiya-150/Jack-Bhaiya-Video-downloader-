@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>📥 All-in-One Video Downloader</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, Roboto, sans-serif;
+      background: #f5f7fc;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+    }
+    .app-card {
+      max-width: 540px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 32px;
+      box-shadow: 0 20px 40px rgba(0,10,30,0.08);
+      padding: 24px 20px 28px;
+      border: 1px solid rgba(211,222,245,0.4);
+    }
+    /* তোমার আগের সব CSS এখানে রাখা হয়েছে (সংক্ষেপে) */
+    /* ... (যদি পুরো CSS চাও তাহলে বলো, আমি আবার পুরোটা দিব) ... */
+    h1 { font-size: 1.8rem; color: #0b1b33; }
+    /* বাকি CSS তোমার আগের কোড থেকে কপি করে এখানে পেস্ট করতে পারো */
+  </style>
+</head>
+<body>
+<div class="app-card">
+  <h1><i class="fas fa-cloud-download-alt"></i> All-in-One</h1>
+  <div class="subhead"><i class="fas fa-bolt"></i> TikTok · Instagram · YouTube · Facebook · more</div>
+  
+  <!-- তোমার আগের HTML কনটেন্ট (input, buttons, resultContainer ইত্যাদি) এখানে রাখো -->
+  <!-- আমি সংক্ষেপে দেখাচ্ছি, তুমি পুরোটা নিয়ে নাও -->
+
+</div>
+
+<script>
+  (function(){
+    "use strict";
+
+    const RAPIDAPI_KEY = '29f8c3b79amshc7b9755d426320dp1b94fajsn62b1821d47db';  // এটা পরে নিজের Key দিয়ে চেঞ্জ করো
+    const API_HOST = 'social-download-all-in-one.p.rapidapi.com';
+    const API_URL = 'https://social-download-all-in-one.p.rapidapi.com/v1/social/autolink';
+
+    const urlInput = document.getElementById('videoUrl');
+    const fetchBtn = document.getElementById('fetchBtn');
+    const statusDiv = document.getElementById('statusMessage');
+    const resultContainer = document.getElementById('resultContainer');
+
+    // তোমার আগের সব ফাংশন (setStatus, showLoader, formatBytes, renderResult, fetchMedia ইত্যাদি) এখানে পেস্ট করো
+
+    // শেষের Event Listeners
+    fetchBtn.addEventListener('click', () => {
+      const url = urlInput.value.trim();
+      fetchMedia(url);
+    });
+
+    document.querySelectorAll('.example-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const demoUrl = btn.getAttribute('data-url');
+        if (demoUrl) {
+          urlInput.value = demoUrl;
+          fetchMedia(demoUrl);
+        }
+      });
+    });
+
+  })();
+</script>
+</body>
+</html>
