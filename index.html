@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-  <title>📥 All‑in‑One Downloader · RapidAPI</title>
-  <!-- Font Awesome for crisp icons (mobile friendly) -->
+  <title>📥 Jack Bhaiya · All‑in‑One Downloader</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     * {
@@ -14,34 +13,88 @@
     }
 
     body {
-      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-      background: #f5f7fc;
+      font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+      background: linear-gradient(145deg, #f3f6fd 0%, #e9eef9 100%);
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 12px;
       margin: 0;
+      position: relative;
     }
 
+    /* ---------- SPLASH NAME OVERLAY ---------- */
+    .splash-name {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0b1b33;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 1;
+      transition: opacity 0.6s ease-out, visibility 0.6s;
+      visibility: visible;
+      pointer-events: none;
+    }
+
+    .splash-name.fade-out {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .name-box {
+      text-align: center;
+      animation: softGlow 2s infinite alternate;
+    }
+
+    .name-box h2 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      color: white;
+      text-shadow: 0 4px 20px rgba(0,160,255,0.7);
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #a7c0ff, #d9e6ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .name-box p {
+      color: #bdd3ff;
+      font-size: 1.1rem;
+      font-weight: 400;
+    }
+
+    @keyframes softGlow {
+      0% { filter: drop-shadow(0 0 8px #3b82f6); }
+      100% { filter: drop-shadow(0 0 20px #60a5fa); }
+    }
+
+    /* ---------- MAIN CARD ---------- */
     .app-card {
       max-width: 540px;
       width: 100%;
-      background: #ffffff;
-      border-radius: 32px;
-      box-shadow: 0 20px 40px rgba(0, 10, 30, 0.08), 0 6px 12px rgba(0, 0, 0, 0.05);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-radius: 36px;
+      box-shadow: 0 25px 45px rgba(0, 10, 30, 0.12), 0 6px 14px rgba(0, 0, 0, 0.05);
       padding: 24px 20px 28px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
       transition: all 0.2s;
-      border: 1px solid rgba(211, 222, 245, 0.4);
     }
 
     h1 {
       display: flex;
       align-items: center;
       gap: 10px;
-      font-weight: 650;
-      font-size: 1.8rem;
-      letter-spacing: -0.02em;
+      font-weight: 700;
+      font-size: 1.9rem;
       color: #0b1b33;
       margin-bottom: 8px;
     }
@@ -50,17 +103,19 @@
       color: #2563eb;
       background: #eef2ff;
       padding: 10px;
-      border-radius: 18px;
+      border-radius: 20px;
       font-size: 1.5rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.02);
     }
 
     .subhead {
-      font-size: 0.9rem;
-      color: #5b687c;
-      margin-bottom: 24px;
+      font-size: 0.95rem;
+      color: #4a5a72;
+      margin-bottom: 22px;
       padding-left: 6px;
-      border-left: 4px solid #94a3b8;
+      border-left: 5px solid #3b82f6;
       padding-left: 14px;
+      font-weight: 500;
     }
 
     .platform-badge {
@@ -73,46 +128,47 @@
 
     .badge {
       background: #f1f5f9;
-      padding: 6px 14px;
+      padding: 7px 16px;
       border-radius: 40px;
-      font-size: 0.8rem;
-      font-weight: 500;
+      font-size: 0.85rem;
+      font-weight: 600;
       color: #1e293b;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.8);
+      gap: 8px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.9);
     }
 
     .badge i {
-      font-size: 1rem;
-      color: #3b82f6;
+      font-size: 1.1rem;
+      color: #2563eb;
     }
 
     .input-group {
       display: flex;
       flex-direction: column;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     label {
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       margin-bottom: 6px;
       color: #1f2a41;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
 
     .url-input-wrapper {
       display: flex;
       align-items: center;
-      background: #f8fafd;
+      background: #ffffff;
       border-radius: 60px;
-      border: 1.5px solid #dde3ed;
+      border: 1.8px solid #dde3ed;
       transition: border 0.15s, box-shadow 0.15s;
       padding: 4px 4px 4px 18px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.02);
     }
 
     .url-input-wrapper:focus-within {
@@ -122,15 +178,15 @@
     }
 
     .url-input-wrapper i {
-      color: #7c8ba0;
-      font-size: 1.1rem;
+      color: #6b7d98;
+      font-size: 1.2rem;
     }
 
     #videoUrl {
       flex: 1;
       border: none;
       background: transparent;
-      padding: 14px 8px 14px 12px;
+      padding: 15px 8px 15px 12px;
       font-size: 1rem;
       outline: none;
       color: #0f1825;
@@ -141,24 +197,23 @@
     #videoUrl::placeholder {
       color: #9aabbf;
       font-weight: 400;
-      font-size: 0.9rem;
     }
 
     #fetchBtn {
-      background: #2563eb;
+      background: #1e3a8a;
       border: none;
       color: white;
-      font-weight: 600;
-      padding: 12px 22px;
+      font-weight: 700;
+      padding: 13px 24px;
       border-radius: 50px;
       font-size: 1rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 10px;
       cursor: pointer;
       transition: background 0.2s, transform 0.1s;
-      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.25);
+      box-shadow: 0 8px 18px rgba(30, 58, 138, 0.3);
       border: 1px solid #3b82f6;
       letter-spacing: 0.3px;
       white-space: nowrap;
@@ -170,7 +225,7 @@
 
     #fetchBtn:active {
       transform: scale(0.97);
-      background: #1d4ed8;
+      background: #1e40af;
     }
 
     #fetchBtn:disabled {
@@ -184,52 +239,51 @@
     .example-links {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px 16px;
-      margin: 12px 0 18px;
+      gap: 12px 14px;
+      margin: 14px 0 18px;
       justify-content: space-evenly;
     }
 
     .example-btn {
-      background: none;
-      border: 1px dashed #b9c7da;
-      padding: 8px 12px;
+      background: rgba(255,255,255,0.7);
+      border: 1.5px dashed #b9c7da;
+      padding: 8px 14px;
       border-radius: 40px;
-      font-size: 0.8rem;
-      color: #2563eb;
-      font-weight: 500;
+      font-size: 0.85rem;
+      color: #1e3a8a;
+      font-weight: 600;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       cursor: pointer;
       transition: background 0.15s;
       backdrop-filter: blur(4px);
     }
 
     .example-btn i {
-      font-size: 0.9rem;
+      font-size: 1rem;
     }
 
     .example-btn:active {
-      background: #e2e8f0;
+      background: #dbeafe;
     }
 
-    /* status & loader */
     #statusMessage {
-      min-height: 38px;
-      margin: 10px 0 6px;
-      font-size: 0.9rem;
+      min-height: 40px;
+      margin: 8px 0 6px;
+      font-size: 0.95rem;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       color: #334155;
     }
 
     .loader {
       display: inline-block;
-      width: 18px;
-      height: 18px;
-      border: 2.5px solid #cbd5e1;
-      border-top: 2.5px solid #2563eb;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #cbd5e1;
+      border-top: 3px solid #2563eb;
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
     }
@@ -237,39 +291,41 @@
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
     .preview-section {
-      margin-top: 10px;
+      margin-top: 8px;
     }
 
     .media-card {
-      background: #fafcff;
-      border-radius: 24px;
-      padding: 16px 14px;
+      background: #ffffffd9;
+      backdrop-filter: blur(4px);
+      border-radius: 28px;
+      padding: 18px 16px;
       border: 1px solid #e6edf8;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.02);
     }
 
     .media-header {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 14px;
+      gap: 14px;
+      margin-bottom: 16px;
     }
 
     .thumbnail {
-      width: 64px;
-      height: 64px;
-      border-radius: 18px;
+      width: 70px;
+      height: 70px;
+      border-radius: 20px;
       object-fit: cover;
       background: #d9e2ef;
-      border: 2px solid white;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.02);
+      border: 2.5px solid white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
     }
 
     .media-info h3 {
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 700;
       color: #0b1b33;
-      line-height: 1.3;
+      line-height: 1.4;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
@@ -279,80 +335,78 @@
     .media-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px 14px;
-      margin-top: 6px;
-      font-size: 0.75rem;
-      color: #5f6c84;
+      gap: 8px 16px;
+      margin-top: 8px;
+      font-size: 0.8rem;
+      color: #4f617c;
     }
 
     .download-grid {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      margin-top: 8px;
+      gap: 14px;
     }
 
     .download-item {
       background: white;
       border-radius: 60px;
-      padding: 8px 10px 8px 18px;
+      padding: 8px 12px 8px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border: 1px solid #e2eaf5;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      border: 1.5px solid #e0e9f5;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
     }
 
     .quality-badge {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       font-weight: 600;
       color: #0f2b4f;
     }
 
     .quality-badge i {
-      width: 22px;
+      width: 24px;
       color: #2563eb;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
     }
 
     .download-btn {
       background: #ffffff;
-      border: 1.5px solid #2563eb;
-      color: #2563eb;
-      padding: 8px 22px;
+      border: 2px solid #1e3a8a;
+      color: #1e3a8a;
+      padding: 10px 24px;
       border-radius: 40px;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 0.9rem;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       cursor: pointer;
       transition: all 0.15s;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
     }
 
     .download-btn i {
-      font-size: 0.9rem;
+      font-size: 1rem;
     }
 
     .download-btn:active {
-      background: #2563eb;
+      background: #1e3a8a;
       color: white;
     }
 
     .audio-download {
-      background: #f1f5fe;
+      background: #eef4ff;
       border-color: #3b82f6;
     }
 
     .error-note {
       background: #fee2e2;
       color: #991b1b;
-      padding: 12px 16px;
-      border-radius: 24px;
-      font-size: 0.9rem;
+      padding: 14px 18px;
+      border-radius: 28px;
+      font-size: 0.95rem;
       margin: 15px 0 5px;
       border-left: 6px solid #ef4444;
     }
@@ -360,22 +414,42 @@
     .footer-note {
       margin-top: 24px;
       text-align: center;
-      font-size: 0.7rem;
-      color: #7f8fa3;
+      font-size: 0.75rem;
+      color: #6f7e95;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .jack-tag {
+      background: #1e3a8a10;
+      border-radius: 40px;
+      padding: 4px 14px;
+      color: #1e3a8a;
+      font-weight: 600;
     }
   </style>
 </head>
 <body>
+
+<!-- SPLASH SCREEN WITH "Jack Bhaiya" (2-3 sec) -->
+<div class="splash-name" id="splashScreen">
+  <div class="name-box">
+    <h2>Jack Bhaiya</h2>
+    <p><i class="fas fa-bolt"></i> All-in-One Downloader</p>
+  </div>
+</div>
+
 <div class="app-card">
   <h1>
     <i class="fas fa-cloud-download-alt"></i> 
-    All‑in‑One
+    Jack Bhaiya
   </h1>
   <div class="subhead">
-    <i class="fas fa-bolt" style="margin-right: 6px;"></i> TikTok · Instagram · YouTube · more
+    <i class="fas fa-infinity"></i> TikTok · Instagram · YouTube · Facebook
   </div>
 
-  <!-- platform hints -->
   <div class="platform-badge">
     <span class="badge"><i class="fab fa-tiktok"></i> TikTok</span>
     <span class="badge"><i class="fab fa-instagram"></i> Instagram</span>
@@ -384,9 +458,8 @@
     <span class="badge"><i class="fab fa-x-twitter"></i> X</span>
   </div>
 
-  <!-- URL input -->
   <div class="input-group">
-    <label><i class="fas fa-link"></i> Paste video link</label>
+    <label><i class="fas fa-link"></i> ভিডিও লিংক পেস্ট করুন</label>
     <div class="url-input-wrapper">
       <i class="fas fa-paste"></i>
       <input type="text" id="videoUrl" placeholder="https://www.tiktok.com/@user/video/..." enterkeyhint="go" inputmode="url">
@@ -394,21 +467,18 @@
     </div>
   </div>
 
-  <!-- Example quick links (mobile tap friendly) -->
   <div class="example-links">
-    <span class="example-btn" data-url="https://www.tiktok.com/@yeuphimzz/video/7237370304337628442"><i class="fab fa-tiktok"></i> TikTok demo</span>
-    <span class="example-btn" data-url="https://www.instagram.com/reel/C7zH6ZRNH4B/"><i class="fab fa-instagram"></i> IG reel</span>
+    <span class="example-btn" data-url="https://www.tiktok.com/@yeuphimzz/video/7237370304337628442"><i class="fab fa-tiktok"></i> TikTok</span>
+    <span class="example-btn" data-url="https://www.instagram.com/reel/C7zH6ZRNH4B/"><i class="fab fa-instagram"></i> Reel</span>
     <span class="example-btn" data-url="https://youtube.com/shorts/5NvRkT6KqYw"><i class="fab fa-youtube"></i> Short</span>
   </div>
 
-  <!-- Status / loader area -->
   <div id="statusMessage"></div>
-
-  <!-- Results will be injected here -->
   <div id="resultContainer" class="preview-section"></div>
 
   <div class="footer-note">
-    <i class="far fa-shield"></i> RapidAPI · Social Download All in One
+    <i class="far fa-shield"></i> Powered by Jack Bhaiya · RapidAPI 
+    <span class="jack-tag"><i class="fas fa-crown"></i> JB</span>
   </div>
 </div>
 
@@ -416,25 +486,25 @@
   (function(){
     "use strict";
 
-    // ---------- CONFIG ----------
+    // ---------- SPLASH TIMER: 2.5 সেকেন্ড পর fade ----------
+    const splash = document.getElementById('splashScreen');
+    setTimeout(() => {
+      splash.classList.add('fade-out');
+    }, 2500); // 2.5 seconds
+
+    // ---------- API CONFIG (নতুন API endpoint: social-download-all-in-one) ----------
     const RAPIDAPI_KEY = '29f8c3b79amshc7b9755d426320dp1b94fajsn62b1821d47db';
     const API_HOST = 'social-download-all-in-one.p.rapidapi.com';
     const API_URL = 'https://social-download-all-in-one.p.rapidapi.com/v1/social/autolink';
 
-    // DOM elements
     const urlInput = document.getElementById('videoUrl');
     const fetchBtn = document.getElementById('fetchBtn');
     const statusDiv = document.getElementById('statusMessage');
     const resultContainer = document.getElementById('resultContainer');
 
-    // Helper: set loading / status
     function setStatus(html, isError = false) {
       statusDiv.innerHTML = html;
-      if (isError) {
-        statusDiv.style.color = '#b91c1c';
-      } else {
-        statusDiv.style.color = '#334155';
-      }
+      statusDiv.style.color = isError ? '#b91c1c' : '#334155';
     }
 
     function clearStatus() {
@@ -445,9 +515,8 @@
       setStatus(`<span class="loader"></span> <span>${message}</span>`);
     }
 
-    // Format bytes / duration
     function formatBytes(bytes) {
-      if (!bytes || bytes === 0) return 'unknown size';
+      if (!bytes) return '';
       const k = 1024;
       const sizes = ['B', 'KB', 'MB', 'GB'];
       const i = Math.floor(Math.log(bytes) / Math.log(k));
@@ -462,13 +531,11 @@
       return `${min}:${remainSec.toString().padStart(2, '0')}`;
     }
 
-    // Clean and prepare download
     function downloadMedia(url, filename) {
       if (!url) return;
-      // Using anchor with download attribute (works if CORS allows, else opens in new tab)
       const a = document.createElement('a');
       a.href = url;
-      a.download = filename || 'media_download';
+      a.download = filename || 'jack_bhaiya_media';
       a.target = '_blank';
       a.rel = 'noopener noreferrer';
       document.body.appendChild(a);
@@ -476,27 +543,29 @@
       setTimeout(() => document.body.removeChild(a), 150);
     }
 
-    // Render result from API response
+    function escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
     function renderResult(data) {
       if (!data || data.error) {
-        let errMsg = data?.message || 'Unknown error from API';
-        resultContainer.innerHTML = `<div class="error-note"><i class="fas fa-exclamation-triangle"></i> ${errMsg}</div>`;
+        resultContainer.innerHTML = `<div class="error-note"><i class="fas fa-exclamation-triangle"></i> ${data?.message || 'মিডিয়া পাওয়া যায়নি'}</div>`;
         return;
       }
 
-      // data fields expected from Social Download All In One
       const source = data.source || 'social';
-      const title = data.title || 'No title';
+      const title = data.title || 'Jack Bhaiya Video';
       const thumbnail = data.thumbnail || '';
       const author = data.author || data.unique_id || '';
-      const duration = data.duration; // ms
+      const duration = data.duration;
       const medias = data.medias || [];
       
-      // Filter video/audio types
       const videoItems = medias.filter(m => m.type === 'video' || (!m.type && m.url));
       const audioItems = medias.filter(m => m.type === 'audio');
-      
-      // Additional qualities, we prioritize no_watermark > hd_no_watermark > watermark > fallback
+
       const getQualityLabel = (item) => {
         if (item.quality === 'no_watermark') return '🎥 No Watermark';
         if (item.quality === 'hd_no_watermark') return '📱 HD (no watermark)';
@@ -505,13 +574,12 @@
         return 'Video';
       };
 
-      // Build media card
       let html = `
         <div class="media-card">
           <div class="media-header">
             ${thumbnail ? `<img class="thumbnail" src="${thumbnail}" alt="thumb" onerror="this.style.display='none'">` : '<div class="thumbnail" style="display:flex;align-items:center;justify-content:center;background:#eef2ff"><i class="fas fa-film" style="color:#3b82f6"></i></div>'}
             <div class="media-info">
-              <h3>${escapeHtml(title) || 'Video content'}</h3>
+              <h3>${escapeHtml(title)}</h3>
               <div class="media-meta">
                 ${author ? `<span><i class="far fa-user"></i> @${escapeHtml(author)}</span>` : ''}
                 <span><i class="fab fa-${escapeHtml(source)}"></i> ${escapeHtml(source)}</span>
@@ -522,101 +590,67 @@
       `;
 
       if (videoItems.length === 0 && audioItems.length === 0) {
-        html += `<div style="padding:10px; background:#f1f5f9; border-radius:20px; text-align:center; color:#475569;"><i class="far fa-frown"></i> No downloadable media found. Try another link.</div>`;
+        html += `<div style="padding:12px; background:#f1f5f9; border-radius:24px; text-align:center;"><i class="far fa-frown"></i> কোনো ডাউনলোড লিংক নেই</div>`;
       } else {
         html += `<div class="download-grid">`;
-        
-        // Video options (prefer no watermark first)
         const sortedVideos = [...videoItems].sort((a, b) => {
           const score = (q) => q === 'no_watermark' ? 3 : q === 'hd_no_watermark' ? 2 : q === 'watermark' ? 1 : 0;
           return score(b.quality) - score(a.quality);
         });
 
-        sortedVideos.forEach((item, idx) => {
+        sortedVideos.forEach((item) => {
           const sizeStr = item.data_size ? formatBytes(item.data_size) : '';
           const qualityText = getQualityLabel(item);
-          const fileHint = item.extension ? `.${item.extension}` : '.mp4';
-          const filename = `${title.replace(/[^a-z0-9]/gi,'_').substring(0,30) || 'video'}_${qualityText.replace(/[^a-z0-9]/gi,'')}${fileHint}`;
-          
+          const ext = item.extension || 'mp4';
+          const filename = `${title.replace(/[^a-z0-9]/gi,'_').substring(0,25) || 'video'}_${qualityText.replace(/[^a-z0-9]/gi,'')}.${ext}`;
           html += `
             <div class="download-item">
-              <div class="quality-badge">
-                <i class="fas fa-video"></i>
-                <span>${escapeHtml(qualityText)} ${sizeStr ? `· ${sizeStr}` : ''}</span>
-              </div>
-              <button class="download-btn" data-url="${encodeURI(item.url)}" data-filename="${filename}">
-                <i class="fas fa-download"></i> Save
-              </button>
+              <div class="quality-badge"><i class="fas fa-video"></i><span>${escapeHtml(qualityText)} ${sizeStr ? '· '+sizeStr : ''}</span></div>
+              <button class="download-btn" data-url="${encodeURI(item.url)}" data-filename="${filename}"><i class="fas fa-download"></i> Save</button>
             </div>
           `;
         });
 
-        // Audio items
         audioItems.forEach((item) => {
           const sizeStr = item.data_size ? formatBytes(item.data_size) : '';
-          const qualityAudio = item.quality || 'audio';
           const ext = item.extension || 'mp3';
-          const filename = `${title.replace(/[^a-z0-9]/gi,'_').substring(0,25) || 'audio'}_audio.${ext}`;
-          
+          const filename = `${title.replace(/[^a-z0-9]/gi,'_').substring(0,20) || 'audio'}_audio.${ext}`;
           html += `
             <div class="download-item audio-download">
-              <div class="quality-badge">
-                <i class="fas fa-music"></i>
-                <span>🎵 Audio ${ext.toUpperCase()} ${sizeStr ? `· ${sizeStr}` : ''}</span>
-              </div>
-              <button class="download-btn" data-url="${encodeURI(item.url)}" data-filename="${filename}">
-                <i class="fas fa-download"></i> MP3
-              </button>
+              <div class="quality-badge"><i class="fas fa-music"></i><span>🎵 Audio ${ext.toUpperCase()} ${sizeStr ? '· '+sizeStr : ''}</span></div>
+              <button class="download-btn" data-url="${encodeURI(item.url)}" data-filename="${filename}"><i class="fas fa-download"></i> MP3</button>
             </div>
           `;
         });
-
         html += `</div>`;
       }
       
-      // Add time_end if present
       if (data.time_end) {
-        html += `<div style="margin-top:12px; font-size:0.7rem; color:#6b7b90; text-align:right;"><i class="far fa-hourglass"></i> fetched in ${data.time_end}ms</div>`;
+        html += `<div style="margin-top:12px; font-size:0.75rem; color:#5f7390; text-align:right;"><i class="far fa-hourglass"></i> ${data.time_end}ms</div>`;
       }
-      html += `</div>`; // close media-card
-
+      html += `</div>`;
       resultContainer.innerHTML = html;
 
-      // Attach event listeners to download buttons
       document.querySelectorAll('.download-btn[data-url]').forEach(btn => {
         btn.addEventListener('click', (e) => {
           e.preventDefault();
-          const url = decodeURIComponent(btn.dataset.url);
-          const fname = btn.dataset.filename || 'download';
-          downloadMedia(url, fname);
+          downloadMedia(decodeURIComponent(btn.dataset.url), btn.dataset.filename);
         });
       });
     }
 
-    // Simple escape
-    function escapeHtml(text) {
-      if (!text) return '';
-      const div = document.createElement('div');
-      div.textContent = text;
-      return div.innerHTML;
-    }
-
-    // Main fetch function
     async function fetchMedia(videoUrl) {
       if (!videoUrl || !videoUrl.trim()) {
-        setStatus('⛔ Please enter a video URL', true);
+        setStatus('⛔ লিংক দিন', true);
         return;
       }
-
-      // basic url check
       if (!videoUrl.startsWith('http')) {
-        setStatus('❌ Invalid URL. Include https://', true);
+        setStatus('❌ সঠিক URL নয়', true);
         return;
       }
 
-      // Clear old results, show loader
       resultContainer.innerHTML = '';
-      showLoader('Contacting RapidAPI...');
+      showLoader('Jack Bhaiya fetching...');
       fetchBtn.disabled = true;
 
       try {
@@ -631,42 +665,33 @@
         });
 
         if (!response.ok) {
-          let errorDetail = `HTTP ${response.status}`;
-          try {
-            const errJson = await response.json();
-            errorDetail = errJson.message || JSON.stringify(errJson);
-          } catch (e) {}
-          throw new Error(`API error (${response.status}): ${errorDetail}`);
+          let errDetail = `HTTP ${response.status}`;
+          try { const e = await response.json(); errDetail = e.message || JSON.stringify(e); } catch (_) {}
+          throw new Error(`API error: ${errDetail}`);
         }
 
         const data = await response.json();
-        console.log('API response:', data);
-        
         if (data && data.error === false) {
           clearStatus();
           renderResult(data);
         } else {
-          const msg = data?.message || 'Could not retrieve media. Unsupported or private?';
-          setStatus(`⚠️ ${msg}`, true);
-          resultContainer.innerHTML = `<div class="error-note"><i class="fas fa-info-circle"></i> ${escapeHtml(msg)}</div>`;
+          setStatus(`⚠️ ${data?.message || 'ডাউনলোড সম্ভব নয়'}`, true);
+          resultContainer.innerHTML = `<div class="error-note"><i class="fas fa-info-circle"></i> ${escapeHtml(data?.message || 'লিংক সাপোর্টেড নয়')}</div>`;
         }
       } catch (err) {
         console.error(err);
         setStatus(`🚫 ${err.message}`, true);
-        resultContainer.innerHTML = `<div class="error-note"><i class="fas fa-plug"></i> Request failed. Check key/network.<br><small>${escapeHtml(err.message)}</small></div>`;
+        resultContainer.innerHTML = `<div class="error-note"><i class="fas fa-plug"></i> নেটওয়ার্ক সমস্যা। আবার চেষ্টা করুন।</div>`;
       } finally {
         fetchBtn.disabled = false;
       }
     }
 
-    // Event listeners
     fetchBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      const url = urlInput.value.trim();
-      fetchMedia(url);
+      fetchMedia(urlInput.value.trim());
     });
 
-    // Enter key in input
     urlInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
         e.preventDefault();
@@ -674,21 +699,17 @@
       }
     });
 
-    // Example buttons (quick fill + auto fetch)
     document.querySelectorAll('.example-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        const demoUrl = btn.getAttribute('data-url');
-        if (demoUrl) {
-          urlInput.value = demoUrl;
-          fetchMedia(demoUrl);
+        const demo = btn.getAttribute('data-url');
+        if (demo) {
+          urlInput.value = demo;
+          fetchMedia(demo);
         }
       });
     });
 
-    // Optional: autofill with TikTok demo on page load? (just as placeholder)
-    // But we can prefill the field for convenience
     window.addEventListener('load', () => {
-      // Prefill with the TikTok example from API documentation (optional)
       if (!urlInput.value) {
         urlInput.value = 'https://www.tiktok.com/@yeuphimzz/video/7237370304337628442';
       }
