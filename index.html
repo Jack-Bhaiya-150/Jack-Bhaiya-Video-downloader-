@@ -421,8 +421,90 @@
       border-left: 6px solid #22c55e;
     }
 
+    /* ---------- LOVE NOTE (GOLDEN) ---------- */
+    .love-note {
+      text-align: center;
+      margin: 16px 0 8px;
+      padding: 12px;
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+      border-radius: 50px;
+      border: 2px solid #fbbf24;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+    }
+
+    .love-note span {
+      font-size: 1.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #b45309, #92400e);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 1px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .love-note i {
+      color: #f59e0b;
+      font-size: 1.3rem;
+      filter: drop-shadow(0 2px 4px rgba(245, 158, 11, 0.5));
+    }
+
+    /* ---------- SUPPORT SECTION ---------- */
+    .support-section {
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1.5px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .support-link {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      padding: 12px 24px;
+      border-radius: 50px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #000000;
+      font-weight: 700;
+      font-size: 1rem;
+      box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3);
+      transition: all 0.2s;
+      border: 1.5px solid #fcd34d;
+    }
+
+    .support-link i {
+      font-size: 1.3rem;
+      color: #1877f2;
+      background: white;
+      padding: 5px;
+      border-radius: 50%;
+    }
+
+    .support-link span {
+      letter-spacing: 0.5px;
+    }
+
+    .support-link .owner-text {
+      background: #000000;
+      color: #fbbf24;
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      margin-left: 8px;
+    }
+
+    .support-link:active {
+      transform: scale(0.97);
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+    }
+
     .footer-note {
-      margin-top: 24px;
+      margin-top: 16px;
       text-align: center;
       font-size: 0.75rem;
       color: #6f7e95;
@@ -478,13 +560,31 @@
   </div>
 
   <div class="example-links">
-    <span class="example-btn" data-url="https://www.tiktok.com/@yeuphimzz/video/7237370304337628442"><i class="fab fa-tiktok"></i> TikTok</span>
+    <span class="example-btn" data-url="https://www.tiktok.com/@jack_bhaiya/video/7237370304337628442"><i class="fab fa-tiktok"></i> TikTok</span>
     <span class="example-btn" data-url="https://www.instagram.com/reel/C7zH6ZRNH4B/"><i class="fab fa-instagram"></i> Reel</span>
-    <span class="example-btn" data-url="https://www.facebook.com/reel/123456789"><i class="fab fa-facebook"></i> Facebook</span>
+    <span class="example-btn" data-url="https://www.facebook.com/share/v/1GGTK7Uoqd/"><i class="fab fa-facebook"></i> Facebook</span>
   </div>
 
   <div id="statusMessage"></div>
   <div id="resultContainer" class="preview-section"></div>
+
+  <!-- LOVE NOTE: Jack + Nora Fathahi (GOLDEN) -->
+  <div class="love-note">
+    <span>
+      <i class="fas fa-heart"></i>
+      Jack + Nora Fathahi
+      <i class="fas fa-heart"></i>
+    </span>
+  </div>
+
+  <!-- SUPPORT SECTION WITH GOLDEN OWNER BUTTON -->
+  <div class="support-section">
+    <a href="https://www.facebook.com/share/1DMMbtkXJj/" target="_blank" class="support-link">
+      <i class="fab fa-facebook-f"></i>
+      <span>Support 24/7</span>
+      <span class="owner-text"><i class="fas fa-crown"></i> Owner</span>
+    </a>
+  </div>
 
   <div class="footer-note">
     <i class="far fa-shield"></i> Powered by Jack Bhaiya · RapidAPI 
@@ -502,8 +602,8 @@
       splash.classList.add('fade-out');
     }, 2500);
 
-    // ---------- NEW API CONFIG (Jack Bhaiya's Latest Key) ----------
-    const RAPIDAPI_KEY = '8ec3dc4d4bmshda89660aba6b944p1401bcjsne21fe7a62e9c'; // নতুন API key
+    // ---------- API CONFIG (Jack Bhaiya's Latest Key) ----------
+    const RAPIDAPI_KEY = '8ec3dc4d4bmshda89660aba6b944p1401bcjsne21fe7a62e9c';
     const API_HOST = 'social-download-all-in-one.p.rapidapi.com';
     const API_URL = 'https://social-download-all-in-one.p.rapidapi.com/v1/social/autolink';
 
@@ -729,12 +829,12 @@
     });
 
     window.addEventListener('load', () => {
-      // Default TikTok demo link
+      // Default TikTok demo link - Jack Bhaiya
       if (!urlInput.value) {
-        urlInput.value = 'https://www.tiktok.com/@yeuphimzz/video/7237370304337628442';
+        urlInput.value = 'https://www.tiktok.com/@jack_bhaiya/video/7237370304337628442';
       }
       
-      console.log('🎬 Jack Bhaiya All-in-One Downloader - API Key Loaded');
+      console.log('💛 Jack + Nora Fathahi - Love Forever 💛');
     });
 
   })();
