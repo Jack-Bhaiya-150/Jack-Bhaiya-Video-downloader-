@@ -6,14 +6,22 @@
   <title>📥 Jack Bhaiya · Neon Downloader</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* ========== ALL CSS REMAINS EXACTLY THE SAME ========== */
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap');
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: 'Rajdhani', 'Segoe UI', sans-serif;
       background: #0a0a0f;
-      background-image: radial-gradient(circle at 20% 30%, rgba(0, 247, 255, 0.03) 0%, transparent 30%), radial-gradient(circle at 80% 70%, rgba(161, 0, 255, 0.04) 0%, transparent 40%), radial-gradient(circle at 40% 80%, rgba(255, 0, 60, 0.03) 0%, transparent 35%), linear-gradient(135deg, #0d0d0d 0%, #050510 50%, #0a0a14 100%);
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(0, 247, 255, 0.03) 0%, transparent 30%),
+        radial-gradient(circle at 80% 70%, rgba(161, 0, 255, 0.04) 0%, transparent 40%),
+        radial-gradient(circle at 40% 80%, rgba(255, 0, 60, 0.03) 0%, transparent 35%),
+        linear-gradient(135deg, #0d0d0d 0%, #050510 50%, #0a0a14 100%);
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -22,6 +30,8 @@
       margin: 0;
       position: relative;
     }
+
+    /* Scanline effect */
     body::before {
       content: "";
       position: fixed;
@@ -33,6 +43,8 @@
       pointer-events: none;
       z-index: 1;
     }
+
+    /* ---------- SPLASH NAME OVERLAY (NEON) ---------- */
     .splash-name {
       position: fixed;
       top: 0;
@@ -49,18 +61,33 @@
       visibility: visible;
       pointer-events: none;
     }
-    .splash-name.fade-out { opacity: 0; visibility: hidden; }
-    .name-box { text-align: center; animation: neonPulse 1.5s infinite alternate; }
+
+    .splash-name.fade-out {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .name-box {
+      text-align: center;
+      animation: neonPulse 1.5s infinite alternate;
+    }
+
     .name-box h2 {
       font-family: 'Orbitron', sans-serif;
       font-size: 3.5rem;
       font-weight: 900;
       color: #ffffff;
-      text-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff, 0 0 40px #00f7ff, 0 0 80px #a100ff, 0 0 120px #ff003c;
+      text-shadow: 
+        0 0 10px #00f7ff,
+        0 0 20px #00f7ff,
+        0 0 40px #00f7ff,
+        0 0 80px #a100ff,
+        0 0 120px #ff003c;
       letter-spacing: 8px;
       margin-bottom: 16px;
       animation: glitchText 3s infinite;
     }
+
     .name-box p {
       font-family: 'Orbitron', sans-serif;
       color: #39ff14;
@@ -69,29 +96,48 @@
       text-shadow: 0 0 15px #39ff14, 0 0 30px #39ff14;
       letter-spacing: 3px;
     }
-    @keyframes neonPulse { 0% { filter: brightness(1); } 100% { filter: brightness(1.3); } }
+
+    @keyframes neonPulse {
+      0% { filter: brightness(1); }
+      100% { filter: brightness(1.3); }
+    }
+
     @keyframes glitchText {
       0%, 100% { transform: skew(0deg, 0deg); opacity: 1; }
       95% { transform: skew(2deg, 1deg); opacity: 0.9; text-shadow: 4px 0 #ff003c, -4px 0 #00f7ff; }
       96% { transform: skew(-2deg, -1deg); opacity: 1; text-shadow: -4px 0 #ff003c, 4px 0 #00f7ff; }
       97% { transform: skew(0deg, 0deg); opacity: 1; }
     }
+
+    /* ---------- MAIN CARD (CYBERPUNK) ---------- */
     .app-card {
       max-width: 540px;
       width: 100%;
       background: rgba(10, 10, 20, 0.85);
       backdrop-filter: blur(20px);
       border-radius: 24px;
-      box-shadow: 0 0 0 1px rgba(0, 247, 255, 0.2), 0 0 0 2px rgba(161, 0, 255, 0.1), 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 247, 255, 0.1), inset 0 0 30px rgba(0, 0, 0, 0.5);
+      box-shadow: 
+        0 0 0 1px rgba(0, 247, 255, 0.2),
+        0 0 0 2px rgba(161, 0, 255, 0.1),
+        0 20px 50px rgba(0, 0, 0, 0.8),
+        0 0 30px rgba(0, 247, 255, 0.1),
+        inset 0 0 30px rgba(0, 0, 0, 0.5);
       padding: 28px 20px 30px;
       transition: all 0.3s;
       position: relative;
       z-index: 10;
       border: 1px solid rgba(57, 255, 20, 0.2);
     }
+
     .app-card:hover {
-      box-shadow: 0 0 0 1px rgba(0, 247, 255, 0.4), 0 0 0 3px rgba(161, 0, 255, 0.2), 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 50px rgba(0, 247, 255, 0.2), inset 0 0 30px rgba(0, 0, 0, 0.6);
+      box-shadow: 
+        0 0 0 1px rgba(0, 247, 255, 0.4),
+        0 0 0 3px rgba(161, 0, 255, 0.2),
+        0 20px 50px rgba(0, 0, 0, 0.9),
+        0 0 50px rgba(0, 247, 255, 0.2),
+        inset 0 0 30px rgba(0, 0, 0, 0.6);
     }
+
     h1 {
       display: flex;
       align-items: center;
@@ -101,19 +147,26 @@
       font-size: 2rem;
       color: #ffffff;
       margin-bottom: 8px;
-      text-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff, 0 0 40px #a100ff;
+      text-shadow: 
+        0 0 10px #00f7ff,
+        0 0 20px #00f7ff,
+        0 0 40px #a100ff;
       letter-spacing: 2px;
     }
+
     h1 i {
       color: #39ff14;
       background: rgba(0, 0, 0, 0.6);
       padding: 10px;
       border-radius: 12px;
       font-size: 1.5rem;
-      box-shadow: 0 0 15px #39ff14, inset 0 0 10px rgba(57, 255, 20, 0.3);
+      box-shadow: 
+        0 0 15px #39ff14,
+        inset 0 0 10px rgba(57, 255, 20, 0.3);
       border: 1px solid #39ff14;
       text-shadow: 0 0 10px #39ff14;
     }
+
     .subhead {
       font-size: 0.95rem;
       color: #00f7ff;
@@ -126,6 +179,7 @@
       text-shadow: 0 0 8px #00f7ff;
       letter-spacing: 1px;
     }
+
     .platform-badge {
       display: flex;
       flex-wrap: wrap;
@@ -133,6 +187,7 @@
       margin-bottom: 24px;
       justify-content: center;
     }
+
     .badge {
       background: rgba(0, 0, 0, 0.6);
       padding: 8px 18px;
@@ -144,20 +199,38 @@
       align-items: center;
       gap: 8px;
       border: 1.5px solid #00f7ff;
-      box-shadow: 0 0 10px rgba(0, 247, 255, 0.3), inset 0 0 8px rgba(0, 247, 255, 0.1);
+      box-shadow: 
+        0 0 10px rgba(0, 247, 255, 0.3),
+        inset 0 0 8px rgba(0, 247, 255, 0.1);
       font-family: 'Rajdhani', sans-serif;
       text-transform: uppercase;
       letter-spacing: 1px;
       transition: all 0.3s;
     }
-    .badge i { font-size: 1.1rem; color: #00f7ff; text-shadow: 0 0 8px #00f7ff; }
+
+    .badge i {
+      font-size: 1.1rem;
+      color: #00f7ff;
+      text-shadow: 0 0 8px #00f7ff;
+    }
+
     .badge:hover {
       border-color: #ff003c;
       box-shadow: 0 0 20px #ff003c, inset 0 0 10px rgba(255, 0, 60, 0.2);
       transform: translateY(-2px);
     }
-    .badge:hover i { color: #ff003c; text-shadow: 0 0 12px #ff003c; }
-    .input-group { display: flex; flex-direction: column; margin-bottom: 20px; }
+
+    .badge:hover i {
+      color: #ff003c;
+      text-shadow: 0 0 12px #ff003c;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+    }
+
     label {
       font-weight: 700;
       font-size: 0.95rem;
@@ -171,6 +244,7 @@
       letter-spacing: 1.5px;
       text-shadow: 0 0 8px #a100ff;
     }
+
     .url-input-wrapper {
       display: flex;
       align-items: center;
@@ -179,13 +253,25 @@
       border: 2px solid #00f7ff;
       transition: all 0.3s;
       padding: 4px 4px 4px 18px;
-      box-shadow: 0 0 15px rgba(0, 247, 255, 0.2), inset 0 0 15px rgba(0, 0, 0, 0.5);
+      box-shadow: 
+        0 0 15px rgba(0, 247, 255, 0.2),
+        inset 0 0 15px rgba(0, 0, 0, 0.5);
     }
+
     .url-input-wrapper:focus-within {
       border-color: #ff003c;
-      box-shadow: 0 0 25px #ff003c, 0 0 40px #a100ff, inset 0 0 15px rgba(0, 0, 0, 0.5);
+      box-shadow: 
+        0 0 25px #ff003c,
+        0 0 40px #a100ff,
+        inset 0 0 15px rgba(0, 0, 0, 0.5);
     }
-    .url-input-wrapper i { color: #00f7ff; font-size: 1.2rem; text-shadow: 0 0 10px #00f7ff; }
+
+    .url-input-wrapper i {
+      color: #00f7ff;
+      font-size: 1.2rem;
+      text-shadow: 0 0 10px #00f7ff;
+    }
+
     #videoUrl {
       flex: 1;
       border: none;
@@ -198,11 +284,13 @@
       font-weight: 500;
       min-width: 0;
     }
+
     #videoUrl::placeholder {
       color: rgba(0, 247, 255, 0.5);
       font-weight: 400;
       text-shadow: 0 0 5px rgba(0, 247, 255, 0.3);
     }
+
     #fetchBtn {
       background: transparent;
       border: 2px solid #39ff14;
@@ -224,7 +312,12 @@
       background: rgba(57, 255, 20, 0.05);
       white-space: nowrap;
     }
-    #fetchBtn i { font-size: 1rem; text-shadow: 0 0 8px #39ff14; }
+
+    #fetchBtn i {
+      font-size: 1rem;
+      text-shadow: 0 0 8px #39ff14;
+    }
+
     #fetchBtn:hover {
       background: #39ff14;
       color: #000000;
@@ -232,8 +325,19 @@
       border-color: #ffffff;
       transform: scale(1.02);
     }
-    #fetchBtn:active { transform: scale(0.98); }
-    #fetchBtn:disabled { opacity: 0.4; pointer-events: none; box-shadow: none; border-color: #555; color: #777; }
+
+    #fetchBtn:active {
+      transform: scale(0.98);
+    }
+
+    #fetchBtn:disabled {
+      opacity: 0.4;
+      pointer-events: none;
+      box-shadow: none;
+      border-color: #555;
+      color: #777;
+    }
+
     .example-links {
       display: flex;
       flex-wrap: wrap;
@@ -241,6 +345,7 @@
       margin: 18px 0 20px;
       justify-content: space-evenly;
     }
+
     .example-btn {
       background: rgba(0, 0, 0, 0.5);
       border: 2px solid #a100ff;
@@ -260,14 +365,23 @@
       letter-spacing: 1px;
       box-shadow: 0 0 12px rgba(161, 0, 255, 0.3);
     }
-    .example-btn i { font-size: 1.1rem; text-shadow: 0 0 10px currentColor; }
+
+    .example-btn i {
+      font-size: 1.1rem;
+      text-shadow: 0 0 10px currentColor;
+    }
+
     .example-btn:hover {
       border-color: #ff003c;
       box-shadow: 0 0 25px #ff003c, 0 0 40px #a100ff;
       background: rgba(255, 0, 60, 0.1);
       transform: translateY(-3px);
     }
-    .example-btn:active { transform: translateY(0); }
+
+    .example-btn:active {
+      transform: translateY(0);
+    }
+
     #statusMessage {
       min-height: 44px;
       margin: 10px 0 8px;
@@ -279,6 +393,7 @@
       font-family: 'Rajdhani', sans-serif;
       text-shadow: 0 0 8px #00f7ff;
     }
+
     .loader {
       display: inline-block;
       width: 22px;
@@ -290,8 +405,13 @@
       animation: spin 0.8s linear infinite;
       box-shadow: 0 0 15px #ff003c;
     }
+
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    .preview-section { margin-top: 10px; }
+
+    .preview-section {
+      margin-top: 10px;
+    }
+
     .media-card {
       background: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(15px);
@@ -299,9 +419,18 @@
       padding: 20px 16px;
       border: 1.5px solid #a100ff;
       margin-bottom: 20px;
-      box-shadow: 0 0 20px rgba(161, 0, 255, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.6);
+      box-shadow: 
+        0 0 20px rgba(161, 0, 255, 0.3),
+        inset 0 0 20px rgba(0, 0, 0, 0.6);
     }
-    .media-header { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
+
+    .media-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
     .thumbnail {
       width: 75px;
       height: 75px;
@@ -311,6 +440,7 @@
       border: 2.5px solid #00f7ff;
       box-shadow: 0 0 20px #00f7ff, inset 0 0 10px rgba(0, 247, 255, 0.2);
     }
+
     .media-info h3 {
       font-size: 1.1rem;
       font-weight: 800;
@@ -324,6 +454,7 @@
       text-shadow: 0 0 8px #00f7ff;
       letter-spacing: 0.5px;
     }
+
     .media-meta {
       display: flex;
       flex-wrap: wrap;
@@ -335,7 +466,13 @@
       font-weight: 600;
       text-shadow: 0 0 6px #39ff14;
     }
-    .download-grid { display: flex; flex-direction: column; gap: 14px; }
+
+    .download-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
     .download-item {
       background: rgba(0, 0, 0, 0.4);
       border-radius: 60px;
@@ -347,10 +484,12 @@
       box-shadow: 0 0 12px rgba(0, 247, 255, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.4);
       transition: all 0.2s;
     }
+
     .download-item:hover {
       border-color: #ff003c;
       box-shadow: 0 0 20px #ff003c, inset 0 0 12px rgba(255, 0, 60, 0.1);
     }
+
     .quality-badge {
       display: flex;
       align-items: center;
@@ -361,7 +500,14 @@
       text-transform: uppercase;
       letter-spacing: 1px;
     }
-    .quality-badge i { width: 26px; color: #39ff14; font-size: 1.3rem; text-shadow: 0 0 12px #39ff14; }
+
+    .quality-badge i {
+      width: 26px;
+      color: #39ff14;
+      font-size: 1.3rem;
+      text-shadow: 0 0 12px #39ff14;
+    }
+
     .download-btn {
       background: transparent;
       border: 2px solid #a100ff;
@@ -381,15 +527,28 @@
       box-shadow: 0 0 12px #a100ff;
       background: rgba(161, 0, 255, 0.05);
     }
-    .download-btn i { font-size: 1rem; }
+
+    .download-btn i {
+      font-size: 1rem;
+    }
+
     .download-btn:hover {
       background: #a100ff;
       box-shadow: 0 0 25px #a100ff, 0 0 40px #ff003c;
       border-color: #ffffff;
       transform: scale(1.02);
     }
-    .audio-download { border-color: #ff003c; box-shadow: 0 0 12px #ff003c, inset 0 0 10px rgba(255, 0, 60, 0.1); }
-    .audio-download .quality-badge i { color: #ff003c; text-shadow: 0 0 12px #ff003c; }
+
+    .audio-download {
+      border-color: #ff003c;
+      box-shadow: 0 0 12px #ff003c, inset 0 0 10px rgba(255, 0, 60, 0.1);
+    }
+
+    .audio-download .quality-badge i {
+      color: #ff003c;
+      text-shadow: 0 0 12px #ff003c;
+    }
+
     .error-note {
       background: rgba(255, 0, 60, 0.15);
       color: #ffcccc;
@@ -402,18 +561,8 @@
       backdrop-filter: blur(10px);
       font-family: 'Rajdhani', sans-serif;
     }
-    .success-note {
-      background: rgba(57, 255, 20, 0.1);
-      color: #39ff14;
-      padding: 16px 20px;
-      border-radius: 20px;
-      font-size: 0.95rem;
-      margin: 15px 0 5px;
-      border-left: 6px solid #39ff14;
-      box-shadow: 0 0 20px #39ff14, inset 0 0 10px rgba(57, 255, 20, 0.1);
-      backdrop-filter: blur(10px);
-      font-family: 'Rajdhani', sans-serif;
-    }
+
+    /* LOVE NOTE (NEON GOLDEN) */
     .love-note {
       text-align: center;
       margin: 20px 0 12px;
@@ -421,9 +570,13 @@
       background: rgba(0, 0, 0, 0.5);
       border-radius: 50px;
       border: 2px solid #ffd700;
-      box-shadow: 0 0 20px #ffd700, 0 0 40px #ff8c00, inset 0 0 15px rgba(255, 215, 0, 0.1);
+      box-shadow: 
+        0 0 20px #ffd700,
+        0 0 40px #ff8c00,
+        inset 0 0 15px rgba(255, 215, 0, 0.1);
       backdrop-filter: blur(8px);
     }
+
     .love-note span {
       font-size: 1.3rem;
       font-weight: 900;
@@ -438,8 +591,20 @@
       font-family: 'Orbitron', sans-serif;
       text-shadow: 0 0 30px #ffd700;
     }
-    .love-note i { color: #ffd700; font-size: 1.4rem; filter: drop-shadow(0 0 12px #ffd700); animation: heartBeat 1.5s infinite; }
-    @keyframes heartBeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+
+    .love-note i {
+      color: #ffd700;
+      font-size: 1.4rem;
+      filter: drop-shadow(0 0 12px #ffd700);
+      animation: heartBeat 1.5s infinite;
+    }
+
+    @keyframes heartBeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    /* SUPPORT SECTION */
     .support-section {
       margin-top: 24px;
       padding-top: 18px;
@@ -448,6 +613,7 @@
       align-items: center;
       justify-content: center;
     }
+
     .support-link {
       background: transparent;
       padding: 14px 28px;
@@ -468,7 +634,14 @@
       background: rgba(255, 215, 0, 0.03);
       backdrop-filter: blur(5px);
     }
-    .support-link i { font-size: 1.4rem; color: #1877f2; text-shadow: 0 0 20px #1877f2; filter: drop-shadow(0 0 8px #00f7ff); }
+
+    .support-link i {
+      font-size: 1.4rem;
+      color: #1877f2;
+      text-shadow: 0 0 20px #1877f2;
+      filter: drop-shadow(0 0 8px #00f7ff);
+    }
+
     .support-link .owner-text {
       background: #000000;
       color: #ffd700;
@@ -479,14 +652,24 @@
       border: 1px solid #ffd700;
       box-shadow: inset 0 0 8px #ffd700;
     }
+
     .support-link:hover {
       background: #ffd700;
       color: #000000;
       box-shadow: 0 0 40px #ffd700, 0 0 60px #ff8c00;
       transform: scale(1.05);
     }
-    .support-link:hover i { color: #000; }
-    .support-link:hover .owner-text { background: #000; color: #ffd700; border-color: #000; }
+
+    .support-link:hover i {
+      color: #000;
+    }
+
+    .support-link:hover .owner-text {
+      background: #000;
+      color: #ffd700;
+      border-color: #000;
+    }
+
     .footer-note {
       margin-top: 18px;
       text-align: center;
@@ -501,6 +684,7 @@
       letter-spacing: 2px;
       text-shadow: 0 0 8px #a100ff;
     }
+
     .jack-tag {
       background: rgba(161, 0, 255, 0.15);
       border-radius: 40px;
@@ -588,285 +772,226 @@
       splash.classList.add('fade-out');
     }, 2800);
 
-    // ========== API CONFIGURATION (NEW KEY + FALLBACK) ==========
-    const RAPIDAPI_KEY = '986ee9c423mshb9988cc7c70db99p148cfcjsnd53506446617'; // NEW API KEY
-    
-    // Multiple API endpoints for fallback reliability
-    const API_ENDPOINTS = [
-      {
-        host: 'social-media-video-downloader.p.rapidapi.com',
-        url: (videoUrl) => `https://social-media-video-downloader.p.rapidapi.com/api/social/download?url=${encodeURIComponent(videoUrl)}`
-      },
-      {
-        host: 'tiktok-video-no-watermark2.p.rapidapi.com',
-        url: (videoUrl) => `https://tiktok-video-no-watermark2.p.rapidapi.com/?url=${encodeURIComponent(videoUrl)}`
-      },
-      {
-        host: 'tiktok-downloader-download-tiktok-videos-without-watermark.p.rapidapi.com',
-        url: (videoUrl) => `https://tiktok-downloader-download-tiktok-videos-without-watermark.p.rapidapi.com/index?url=${encodeURIComponent(videoUrl)}`
-      }
-    ];
-    
-    // DOM Elements
+    const RAPIDAPI_KEY = '8ec3dc4d4bmshda89660aba6b944p1401bcjsne21fe7a62e9c';
+    const API_HOST = 'social-download-all-in-one.p.rapidapi.com';
+    const API_URL = 'https://social-download-all-in-one.p.rapidapi.com/v1/social/autolink';
+
     const urlInput = document.getElementById('videoUrl');
     const fetchBtn = document.getElementById('fetchBtn');
-    const statusMsg = document.getElementById('statusMessage');
+    const statusDiv = document.getElementById('statusMessage');
     const resultContainer = document.getElementById('resultContainer');
-    const exampleBtns = document.querySelectorAll('.example-btn');
 
-    // Helper: Update Status
-    function setStatus(text, isLoading = false) {
-      if (isLoading) {
-        statusMsg.innerHTML = `<span class="loader"></span> <span>${text}</span>`;
-      } else {
-        statusMsg.innerHTML = text;
-      }
+    function setStatus(html, isError = false) {
+      statusDiv.innerHTML = html;
+      statusDiv.style.color = isError ? '#ff003c' : '#00f7ff';
     }
 
-    // Helper: Format Bytes
+    function clearStatus() { setStatus(''); }
+    function showLoader(message = 'SCANNING...') {
+      setStatus(`<span class="loader"></span> <span>${message}</span>`);
+    }
+
     function formatBytes(bytes) {
       if (!bytes) return '';
+      const k = 1024;
       const sizes = ['B', 'KB', 'MB', 'GB'];
-      const i = Math.floor(Math.log(bytes) / Math.log(1024));
-      return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${sizes[i]}`;
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
 
-    // Helper: Format Duration (seconds to MM:SS)
-    function formatDuration(seconds) {
-      if (!seconds) return '';
-      if (typeof seconds === 'string') return seconds;
-      const mins = Math.floor(seconds / 60);
-      const secs = Math.floor(seconds % 60);
-      return `${mins}:${secs.toString().padStart(2, '0')}`;
+    function formatDuration(ms) {
+      if (!ms) return '';
+      const sec = Math.floor(ms / 1000);
+      const min = Math.floor(sec / 60);
+      const remainSec = sec % 60;
+      return `${min}:${remainSec.toString().padStart(2, '0')}`;
     }
 
-    // Try a single API endpoint
-    async function tryEndpoint(endpoint, url) {
-      const response = await fetch(endpoint.url(url), {
-        method: 'GET',
-        headers: {
-          'x-rapidapi-key': RAPIDAPI_KEY,
-          'x-rapidapi-host': endpoint.host
-        }
+    function downloadMedia(url, filename) {
+      if (!url) return;
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename || 'neon_media';
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => document.body.removeChild(a), 150);
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function renderResult(data) {
+      if (!data || data.error) {
+        resultContainer.innerHTML = `<div class="error-note"><i class="fas fa-exclamation-triangle"></i> ${data?.message || 'SIGNAL LOST'}</div>`;
+        return;
+      }
+
+      const source = data.source || 'NEON';
+      const title = data.title || 'CYBERPUNK_VIDEO';
+      const thumbnail = data.thumbnail || '';
+      const author = data.author || data.unique_id || '';
+      const duration = data.duration;
+      const medias = data.medias || [];
+      
+      const videoItems = medias.filter(m => m.type === 'video' || (!m.type && m.url));
+      const audioItems = medias.filter(m => m.type === 'audio');
+
+      const getQualityLabel = (item) => {
+        if (item.quality === 'no_watermark') return '🎥 NO_WATERMARK';
+        if (item.quality === 'hd_no_watermark') return '📱 HD_CLEAN';
+        if (item.quality === 'watermark') return '💧 WATERMARK';
+        if (item.extension) return `${item.extension.toUpperCase()} · ${item.quality || 'VIDEO'}`;
+        return 'VIDEO';
+      };
+
+      let html = `
+        <div class="media-card">
+          <div class="media-header">
+            ${thumbnail ? `<img class="thumbnail" src="${thumbnail}" alt="thumb" onerror="this.style.display='none'">` : '<div class="thumbnail" style="display:flex;align-items:center;justify-content:center;background:#1a0033"><i class="fas fa-film" style="color:#a100ff"></i></div>'}
+            <div class="media-info">
+              <h3>${escapeHtml(title)}</h3>
+              <div class="media-meta">
+                ${author ? `<span><i class="far fa-user"></i> @${escapeHtml(author)}</span>` : ''}
+                <span><i class="fab fa-${escapeHtml(source)}"></i> ${escapeHtml(source)}</span>
+                ${duration ? `<span><i class="far fa-clock"></i> ${formatDuration(duration)}</span>` : ''}
+              </div>
+            </div>
+          </div>
+      `;
+
+      if (videoItems.length === 0 && audioItems.length === 0) {
+        html += `<div style="padding:16px; background:rgba(0,0,0,0.4); border-radius:20px; text-align:center; border:1px solid #ff003c;"><i class="far fa-frown"></i> NO STREAMS FOUND</div>`;
+      } else {
+        html += `<div class="download-grid">`;
+        const sortedVideos = [...videoItems].sort((a, b) => {
+          const score = (q) => q === 'no_watermark' ? 3 : q === 'hd_no_watermark' ? 2 : q === 'watermark' ? 1 : 0;
+          return score(b.quality) - score(a.quality);
+        });
+
+        sortedVideos.forEach((item) => {
+          const sizeStr = item.data_size ? formatBytes(item.data_size) : '';
+          const qualityText = getQualityLabel(item);
+          const ext = item.extension || 'mp4';
+          const filename = `${title.replace(/[^a-z0-9]/gi,'_').substring(0,25) || 'video'}_${qualityText.replace(/[^a-z0-9]/gi,'')}.${ext}`;
+          html += `
+            <div class="download-item">
+              <div class="quality-badge"><i class="fas fa-video"></i><span>${escapeHtml(qualityText)} ${sizeStr ? '· '+sizeStr : ''}</span></div>
+              <button class="download-btn" data-url="${encodeURI(item.url)}" data-filename="${filename}"><i class="fas fa-download"></i> SAVE</button>
+            </div>
+          `;
+        });
+
+        audioItems.forEach((item) => {
+          const sizeStr = item.data_size ? formatBytes(item.data_size) : '';
+          const ext = item.extension || 'mp3';
+          const filename = `${title.replace(/[^a-z0-9]/gi,'_').substring(0,20) || 'audio'}_audio.${ext}`;
+          html += `
+            <div class="download-item audio-download">
+              <div class="quality-badge"><i class="fas fa-music"></i><span>🎵 AUDIO ${ext.toUpperCase()} ${sizeStr ? '· '+sizeStr : ''}</span></div>
+              <button class="download-btn" data-url="${encodeURI(item.url)}" data-filename="${filename}"><i class="fas fa-download"></i> MP3</button>
+            </div>
+          `;
+        });
+        html += `</div>`;
+      }
+      
+      if (data.time_end) {
+        html += `<div style="margin-top:12px; font-size:0.75rem; color:#39ff14; text-align:right;"><i class="far fa-hourglass"></i> ${data.time_end}ms</div>`;
+      }
+      html += `</div>`;
+      resultContainer.innerHTML = html;
+
+      document.querySelectorAll('.download-btn[data-url]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          downloadMedia(decodeURIComponent(btn.dataset.url), btn.dataset.filename);
+        });
       });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-      
-      const data = await response.json();
-      return data;
     }
 
-    // Parse response data from different API formats into unified format
-    function parseResponseData(data, platform) {
-      // Handle TikTok format
-      if (data.data) {
-        const videoData = data.data;
-        return {
-          title: videoData.title || videoData.desc || 'TikTok Video',
-          thumbnail: videoData.cover || videoData.origin_cover || '',
-          duration: formatDuration(videoData.duration),
-          author: videoData.author?.nickname || videoData.nickname || '',
-          medias: videoData.play ? [{ 
-            quality: 'HD', 
-            url: videoData.play, 
-            extension: 'mp4',
-            size: videoData.size
-          }] : [],
-          audio: videoData.music || videoData.music_info?.url || '',
-          audioExtension: 'mp3',
-          audioSize: null
-        };
+    async function fetchMedia(videoUrl) {
+      if (!videoUrl || !videoUrl.trim()) {
+        setStatus('[ERROR] NO INPUT', true);
+        return;
       }
-      
-      // Handle generic social media downloader format
-      if (data.medias || data.audio || data.url) {
-        return {
-          title: data.title || 'Video Content',
-          thumbnail: data.thumbnail || data.thumb || '',
-          duration: data.duration || '',
-          author: data.author || data.uploader || '',
-          medias: data.medias || (data.url ? [{ quality: 'HD', url: data.url, extension: 'mp4' }] : []),
-          audio: data.audio || data.music || '',
-          audioExtension: data.audioExtension || 'mp3',
-          audioSize: data.audioSize || null
-        };
-      }
-      
-      // Fallback - try to extract any video URL
-      const videoUrl = data.videoUrl || data.video || data.download || data.url;
-      if (videoUrl) {
-        return {
-          title: data.title || 'Video',
-          thumbnail: data.thumbnail || '',
-          duration: '',
-          author: data.author || '',
-          medias: [{ quality: 'SD', url: videoUrl, extension: 'mp4' }],
-          audio: data.audio || '',
-          audioExtension: 'mp3',
-          audioSize: null
-        };
-      }
-      
-      return null;
-    }
-
-    // Main Fetch Function with fallback
-    async function fetchVideo(url) {
-      if (!url) {
-        setStatus('<i class="fas fa-exclamation-triangle"></i> LINK DAYA KOREN! (Please paste a link)');
+      if (!videoUrl.startsWith('http')) {
+        setStatus('[ERROR] INVALID URL', true);
         return;
       }
 
       resultContainer.innerHTML = '';
-      setStatus('🔍 SCANNING NETWORK...', true);
+      showLoader('CONNECTING TO NEON NETWORK...');
       fetchBtn.disabled = true;
 
-      let lastError = null;
-      
-      // Try each endpoint until one works
-      for (let i = 0; i < API_ENDPOINTS.length; i++) {
-        const endpoint = API_ENDPOINTS[i];
-        try {
-          setStatus(`📡 CONNECTING [ENDPOINT ${i + 1}/${API_ENDPOINTS.length}]...`, true);
-          
-          const data = await tryEndpoint(endpoint, url);
-          const parsed = parseResponseData(data);
-          
-          if (parsed && (parsed.medias?.length > 0 || parsed.audio)) {
-            // Success! Display results
-            displayResults(parsed);
-            setStatus(`<i class="fas fa-check-circle" style="color:#39ff14;"></i> SUCCESS! DOWNLOAD READY.`);
-            return;
-          } else {
-            throw new Error('No media found in response');
-          }
-          
-        } catch (error) {
-          console.warn(`Endpoint ${i + 1} failed:`, error.message);
-          lastError = error;
-          // Continue to next endpoint
+      try {
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-rapidapi-host': API_HOST,
+            'x-rapidapi-key': RAPIDAPI_KEY
+          },
+          body: JSON.stringify({ url: videoUrl })
+        });
+
+        if (!response.ok) {
+          let errDetail = `HTTP ${response.status}`;
+          try { const e = await response.json(); errDetail = e.message || JSON.stringify(e); } catch (_) {}
+          throw new Error(`API: ${errDetail}`);
         }
-      }
 
-      // All endpoints failed
-      setStatus('');
-      resultContainer.innerHTML = `
-        <div class="error-note">
-          <i class="fas fa-biohazard"></i> ALL CONNECTIONS FAILED
-          <br><small style="display:block; margin-top:10px; color:#00f7ff;">
-            >> ${lastError?.message || 'API QUOTA EXCEEDED OR LINK INVALID'}<br>
-            >> TRY: DIFFERENT LINK / WAIT 24H / NEW API KEY
-          </small>
-        </div>
-      `;
-      
-      fetchBtn.disabled = false;
+        const data = await response.json();
+        if (data && data.error === false) {
+          clearStatus();
+          renderResult(data);
+          setStatus('[SUCCESS] STREAM READY <i class="fas fa-check-circle" style="color:#39ff14;"></i>', false);
+        } else {
+          const msg = data?.message || 'DECRYPTION FAILED';
+          setStatus(`[WARN] ${msg}`, true);
+          resultContainer.innerHTML = `<div class="error-note"><i class="fas fa-skull"></i> ${escapeHtml(msg)}</div>`;
+        }
+      } catch (err) {
+        console.error(err);
+        setStatus(`[FATAL] ${err.message}`, true);
+        resultContainer.innerHTML = `<div class="error-note"><i class="fas fa-plug"></i> CONNECTION LOST<br><small>${escapeHtml(err.message)}</small></div>`;
+      } finally {
+        fetchBtn.disabled = false;
+      }
     }
 
-    // Display parsed results
-    function displayResults(data) {
-      let html = `
-        <div class="media-card">
-          <div class="media-header">
-            <img class="thumbnail" src="${data.thumbnail || 'https://placehold.co/75x75/1a1a2e/00f7ff?text=VID'}" alt="thumb" onerror="this.src='https://placehold.co/75x75/1a1a2e/00f7ff?text=ERR'">
-            <div class="media-info">
-              <h3>${data.title || 'Neon Video Content'}</h3>
-              <div class="media-meta">
-                ${data.duration ? `<span><i class="fas fa-clock"></i> ${data.duration}</span>` : ''}
-                ${data.author ? `<span><i class="fas fa-user"></i> ${data.author}</span>` : ''}
-              </div>
-            </div>
-          </div>
-          <div class="download-grid">
-      `;
-
-      // Video Links
-      if (data.medias && data.medias.length > 0) {
-        data.medias.forEach((media, index) => {
-          if (media.url && media.quality !== 'audio') {
-            const qualityLabel = media.quality || (index === 0 ? 'HD' : 'SD');
-            const ext = media.extension || 'mp4';
-            const sizeText = media.size ? formatBytes(media.size) : 'DOWNLOAD';
-            html += `
-              <div class="download-item">
-                <div class="quality-badge">
-                  <i class="fas fa-video"></i>
-                  <span>${qualityLabel.toUpperCase()} ${ext.toUpperCase()}</span>
-                </div>
-                <button class="download-btn" data-url="${media.url}">
-                  <i class="fas fa-download"></i> ${sizeText}
-                </button>
-              </div>
-            `;
-          }
-        });
-      }
-
-      // Audio Link
-      if (data.audio) {
-        const audioSizeText = data.audioSize ? formatBytes(data.audioSize) : 'DOWNLOAD';
-        html += `
-          <div class="download-item audio-download">
-            <div class="quality-badge">
-              <i class="fas fa-music"></i>
-              <span>AUDIO ${data.audioExtension || 'MP3'}</span>
-            </div>
-            <button class="download-btn" data-url="${data.audio}">
-              <i class="fas fa-download"></i> ${audioSizeText}
-            </button>
-          </div>
-        `;
-      }
-
-      html += `</div></div>`;
-      
-      // Success message
-      html += `
-        <div class="success-note">
-          <i class="fas fa-bolt"></i> READY! CLICK BUTTON TO DOWNLOAD
-        </div>
-      `;
-
-      resultContainer.innerHTML = html;
-      fetchBtn.disabled = false;
-
-      // Attach Download Listeners
-      document.querySelectorAll('.download-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          const downloadUrl = btn.dataset.url;
-          if (downloadUrl) {
-            window.open(downloadUrl, '_blank');
-            btn.innerHTML = '<i class="fas fa-check"></i> OPENED';
-            setTimeout(() => {
-              btn.innerHTML = '<i class="fas fa-download"></i> DOWNLOAD';
-            }, 2000);
-          }
-        });
-      });
-    }
-
-    // Event Listeners
-    fetchBtn.addEventListener('click', () => fetchVideo(urlInput.value.trim()));
+    fetchBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      fetchMedia(urlInput.value.trim());
+    });
 
     urlInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
-        fetchVideo(urlInput.value.trim());
+        e.preventDefault();
+        fetchBtn.click();
       }
     });
 
-    exampleBtns.forEach(btn => {
+    document.querySelectorAll('.example-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        const url = btn.dataset.url;
-        urlInput.value = url;
-        fetchVideo(url);
+        const demo = btn.getAttribute('data-url');
+        if (demo) {
+          urlInput.value = demo;
+          fetchMedia(demo);
+        }
       });
     });
 
-    // Initial ready message
-    setStatus('<i class="fas fa-power-off" style="color:#39ff14;"></i> SYSTEM ONLINE · PASTE LINK');
+    window.addEventListener('load', () => {
+      if (!urlInput.value) {
+        urlInput.value = 'https://www.tiktok.com/@jack_bhaiya/video/7237370304337628442';
+      }
+    });
 
   })();
 </script>
