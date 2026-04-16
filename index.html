@@ -31,7 +31,6 @@
       position: relative;
     }
 
-    /* Scanline effect */
     body::before {
       content: "";
       position: fixed;
@@ -44,7 +43,7 @@
       z-index: 1;
     }
 
-    /* ---------- SPLASH NAME OVERLAY (NEON) ---------- */
+    /* ---------- SPLASH SCREEN ---------- */
     .splash-name {
       position: fixed;
       top: 0;
@@ -77,12 +76,7 @@
       font-size: 4.5rem;
       font-weight: 900;
       color: #ffd700;
-      text-shadow: 
-        0 0 10px #ffd700,
-        0 0 20px #ff8c00,
-        0 0 40px #ffd700,
-        0 0 80px #ff003c,
-        0 0 120px #ff8c00;
+      text-shadow: 0 0 10px #ffd700, 0 0 20px #ff8c00, 0 0 40px #ffd700, 0 0 80px #ff003c, 0 0 120px #ff8c00;
       letter-spacing: 12px;
       margin-bottom: 10px;
       animation: goldPulse 2s infinite alternate;
@@ -95,12 +89,7 @@
       font-size: 3.2rem;
       font-weight: 900;
       color: #ffffff;
-      text-shadow: 
-        0 0 10px #00f7ff,
-        0 0 20px #00f7ff,
-        0 0 40px #00f7ff,
-        0 0 80px #a100ff,
-        0 0 120px #ff003c;
+      text-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff, 0 0 40px #00f7ff, 0 0 80px #a100ff, 0 0 120px #ff003c;
       letter-spacing: 8px;
       margin-bottom: 15px;
       animation: glitchText 3s infinite;
@@ -112,10 +101,7 @@
       color: #39ff14;
       font-size: 2.2rem;
       font-weight: 700;
-      text-shadow: 
-        0 0 15px #39ff14, 
-        0 0 30px #39ff14,
-        0 0 60px #00f7ff;
+      text-shadow: 0 0 15px #39ff14, 0 0 30px #39ff14, 0 0 60px #00f7ff;
       letter-spacing: 8px;
       display: flex;
       align-items: center;
@@ -151,19 +137,14 @@
       50% { transform: scale(1.2); }
     }
 
-    /* ---------- MAIN CARD (CYBERPUNK) ---------- */
+    /* ---------- MAIN CARD ---------- */
     .app-card {
       max-width: 540px;
       width: 100%;
       background: rgba(10, 10, 20, 0.85);
       backdrop-filter: blur(20px);
       border-radius: 24px;
-      box-shadow: 
-        0 0 0 1px rgba(0, 247, 255, 0.2),
-        0 0 0 2px rgba(161, 0, 255, 0.1),
-        0 20px 50px rgba(0, 0, 0, 0.8),
-        0 0 30px rgba(0, 247, 255, 0.1),
-        inset 0 0 30px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 0 1px rgba(0, 247, 255, 0.2), 0 0 0 2px rgba(161, 0, 255, 0.1), 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 247, 255, 0.1), inset 0 0 30px rgba(0, 0, 0, 0.5);
       padding: 28px 20px 30px;
       transition: all 0.3s;
       position: relative;
@@ -172,12 +153,7 @@
     }
 
     .app-card:hover {
-      box-shadow: 
-        0 0 0 1px rgba(0, 247, 255, 0.4),
-        0 0 0 3px rgba(161, 0, 255, 0.2),
-        0 20px 50px rgba(0, 0, 0, 0.9),
-        0 0 50px rgba(0, 247, 255, 0.2),
-        inset 0 0 30px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 0 0 1px rgba(0, 247, 255, 0.4), 0 0 0 3px rgba(161, 0, 255, 0.2), 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 50px rgba(0, 247, 255, 0.2), inset 0 0 30px rgba(0, 0, 0, 0.6);
     }
 
     h1 {
@@ -189,10 +165,7 @@
       font-size: 2rem;
       color: #ffffff;
       margin-bottom: 8px;
-      text-shadow: 
-        0 0 10px #00f7ff,
-        0 0 20px #00f7ff,
-        0 0 40px #a100ff;
+      text-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff, 0 0 40px #a100ff;
       letter-spacing: 2px;
     }
 
@@ -202,9 +175,7 @@
       padding: 10px;
       border-radius: 12px;
       font-size: 1.5rem;
-      box-shadow: 
-        0 0 15px #39ff14,
-        inset 0 0 10px rgba(57, 255, 20, 0.3);
+      box-shadow: 0 0 15px #39ff14, inset 0 0 10px rgba(57, 255, 20, 0.3);
       border: 1px solid #39ff14;
       text-shadow: 0 0 10px #39ff14;
     }
@@ -241,9 +212,7 @@
       align-items: center;
       gap: 8px;
       border: 1.5px solid #00f7ff;
-      box-shadow: 
-        0 0 10px rgba(0, 247, 255, 0.3),
-        inset 0 0 8px rgba(0, 247, 255, 0.1);
+      box-shadow: 0 0 10px rgba(0, 247, 255, 0.3), inset 0 0 8px rgba(0, 247, 255, 0.1);
       font-family: 'Rajdhani', sans-serif;
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -260,11 +229,6 @@
       border-color: #ff003c;
       box-shadow: 0 0 20px #ff003c, inset 0 0 10px rgba(255, 0, 60, 0.2);
       transform: translateY(-2px);
-    }
-
-    .badge:hover i {
-      color: #ff003c;
-      text-shadow: 0 0 12px #ff003c;
     }
 
     .input-group {
@@ -295,17 +259,12 @@
       border: 2px solid #00f7ff;
       transition: all 0.3s;
       padding: 4px 4px 4px 18px;
-      box-shadow: 
-        0 0 15px rgba(0, 247, 255, 0.2),
-        inset 0 0 15px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 15px rgba(0, 247, 255, 0.2), inset 0 0 15px rgba(0, 0, 0, 0.5);
     }
 
     .url-input-wrapper:focus-within {
       border-color: #ff003c;
-      box-shadow: 
-        0 0 25px #ff003c,
-        0 0 40px #a100ff,
-        inset 0 0 15px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 25px #ff003c, 0 0 40px #a100ff, inset 0 0 15px rgba(0, 0, 0, 0.5);
     }
 
     .url-input-wrapper i {
@@ -355,11 +314,6 @@
       white-space: nowrap;
     }
 
-    #fetchBtn i {
-      font-size: 1rem;
-      text-shadow: 0 0 8px #39ff14;
-    }
-
     #fetchBtn:hover {
       background: #39ff14;
       color: #000000;
@@ -368,16 +322,9 @@
       transform: scale(1.02);
     }
 
-    #fetchBtn:active {
-      transform: scale(0.98);
-    }
-
     #fetchBtn:disabled {
       opacity: 0.4;
       pointer-events: none;
-      box-shadow: none;
-      border-color: #555;
-      color: #777;
     }
 
     .example-links {
@@ -408,20 +355,11 @@
       box-shadow: 0 0 12px rgba(161, 0, 255, 0.3);
     }
 
-    .example-btn i {
-      font-size: 1.1rem;
-      text-shadow: 0 0 10px currentColor;
-    }
-
     .example-btn:hover {
       border-color: #ff003c;
       box-shadow: 0 0 25px #ff003c, 0 0 40px #a100ff;
       background: rgba(255, 0, 60, 0.1);
       transform: translateY(-3px);
-    }
-
-    .example-btn:active {
-      transform: translateY(0);
     }
 
     #statusMessage {
@@ -450,10 +388,6 @@
 
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-    .preview-section {
-      margin-top: 10px;
-    }
-
     .media-card {
       background: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(15px);
@@ -461,9 +395,7 @@
       padding: 20px 16px;
       border: 1.5px solid #a100ff;
       margin-bottom: 20px;
-      box-shadow: 
-        0 0 20px rgba(161, 0, 255, 0.3),
-        inset 0 0 20px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 0 20px rgba(161, 0, 255, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.6);
     }
 
     .media-header {
@@ -484,17 +416,12 @@
     }
 
     .media-info h3 {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 800;
       color: #ffffff;
       line-height: 1.4;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
       font-family: 'Orbitron', sans-serif;
       text-shadow: 0 0 8px #00f7ff;
-      letter-spacing: 0.5px;
     }
 
     .media-meta {
@@ -504,7 +431,6 @@
       margin-top: 8px;
       font-size: 0.85rem;
       color: #39ff14;
-      font-family: 'Rajdhani', sans-serif;
       font-weight: 600;
       text-shadow: 0 0 6px #39ff14;
     }
@@ -524,7 +450,6 @@
       justify-content: space-between;
       border: 2px solid #00f7ff;
       box-shadow: 0 0 12px rgba(0, 247, 255, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.4);
-      transition: all 0.2s;
     }
 
     .download-item:hover {
@@ -538,9 +463,7 @@
       gap: 12px;
       font-weight: 700;
       color: #ffffff;
-      font-family: 'Rajdhani', sans-serif;
       text-transform: uppercase;
-      letter-spacing: 1px;
     }
 
     .quality-badge i {
@@ -565,13 +488,8 @@
       transition: all 0.3s;
       font-family: 'Orbitron', sans-serif;
       text-transform: uppercase;
-      letter-spacing: 1px;
       box-shadow: 0 0 12px #a100ff;
       background: rgba(161, 0, 255, 0.05);
-    }
-
-    .download-btn i {
-      font-size: 1rem;
     }
 
     .download-btn:hover {
@@ -581,12 +499,12 @@
       transform: scale(1.02);
     }
 
-    .audio-download {
+    .audio-item {
       border-color: #ff003c;
       box-shadow: 0 0 12px #ff003c, inset 0 0 10px rgba(255, 0, 60, 0.1);
     }
 
-    .audio-download .quality-badge i {
+    .audio-item .quality-badge i {
       color: #ff003c;
       text-shadow: 0 0 12px #ff003c;
     }
@@ -601,10 +519,8 @@
       border-left: 6px solid #ff003c;
       box-shadow: 0 0 20px #ff003c, inset 0 0 10px rgba(255, 0, 60, 0.2);
       backdrop-filter: blur(10px);
-      font-family: 'Rajdhani', sans-serif;
     }
 
-    /* LOVE NOTE (NEON GOLDEN) */
     .love-note {
       text-align: center;
       margin: 20px 0 12px;
@@ -612,10 +528,7 @@
       background: rgba(0, 0, 0, 0.5);
       border-radius: 50px;
       border: 2px solid #ffd700;
-      box-shadow: 
-        0 0 20px #ffd700,
-        0 0 40px #ff8c00,
-        inset 0 0 15px rgba(255, 215, 0, 0.1);
+      box-shadow: 0 0 20px #ffd700, 0 0 40px #ff8c00, inset 0 0 15px rgba(255, 215, 0, 0.1);
       backdrop-filter: blur(8px);
     }
 
@@ -646,7 +559,6 @@
       50% { transform: scale(1.2); }
     }
 
-    /* SUPPORT SECTION */
     .support-section {
       margin-top: 24px;
       padding-top: 18px;
@@ -681,7 +593,6 @@
       font-size: 1.4rem;
       color: #1877f2;
       text-shadow: 0 0 20px #1877f2;
-      filter: drop-shadow(0 0 8px #00f7ff);
     }
 
     .support-link .owner-text {
@@ -700,16 +611,6 @@
       color: #000000;
       box-shadow: 0 0 40px #ffd700, 0 0 60px #ff8c00;
       transform: scale(1.05);
-    }
-
-    .support-link:hover i {
-      color: #000;
-    }
-
-    .support-link:hover .owner-text {
-      background: #000;
-      color: #ffd700;
-      border-color: #000;
     }
 
     .footer-note {
@@ -815,12 +716,10 @@
     "use strict";
 
     const splash = document.getElementById('splashScreen');
-    setTimeout(() => {
-      splash.classList.add('fade-out');
-    }, 2800);
+    setTimeout(() => splash.classList.add('fade-out'), 2800);
 
-    // NEW API KEY - UPDATED
-    const RAPIDAPI_KEY = '19e67dd5b5msh8f5920d0a39061ap19ea8bjsn44f4b44b0c96';
+    // তোমার API Key
+    const RAPIDAPI_KEY = '7d9c2c4100msha36d2c8f5a61166p14f89bjsn132ccb41cb6b';
     const API_HOST = 'social-media-video-downloader.p.rapidapi.com';
     
     const videoUrlInput = document.getElementById('videoUrl');
@@ -830,7 +729,7 @@
     
     // Example buttons
     document.querySelectorAll('.example-btn').forEach(btn => {
-      btn.addEventListener('click', function(e) {
+      btn.addEventListener('click', function() {
         const url = this.dataset.url;
         if (url) {
           videoUrlInput.value = url;
@@ -839,11 +738,8 @@
       });
     });
     
-    // Enter key in input
     videoUrlInput.addEventListener('keypress', (e) => {
-      if(e.key === 'Enter') {
-        fetchVideo();
-      }
+      if(e.key === 'Enter') fetchVideo();
     });
     
     fetchBtn.addEventListener('click', fetchVideo);
@@ -860,27 +756,45 @@
         return;
       }
       
-      // Show loading
       fetchBtn.disabled = true;
       showStatus('<span class="loader"></span> Fetching...', '#00f7ff');
       resultContainer.innerHTML = '';
       
-      // Call API
       fetchFromAPI(url);
     }
     
     function isValidUrl(string) {
-      try {
-        new URL(string);
-        return true;
-      } catch (_) {
-        return false;
-      }
+      try { new URL(string); return true; } 
+      catch { return false; }
     }
     
     function showStatus(msg, color) {
       statusDiv.innerHTML = msg;
       statusDiv.style.color = color;
+    }
+    
+    function formatDuration(seconds) {
+      if (!seconds) return '';
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+    
+    function formatFileSize(bytes) {
+      if (!bytes) return '';
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+    
+    function getQualityLabel(quality) {
+      const labels = {
+        'hd_no_watermark': '🎬 HD (No Watermark)',
+        'no_watermark': '📹 SD (No Watermark)',
+        'watermark': '💧 With Watermark',
+        'audio': '🎵 Audio MP3'
+      };
+      return labels[quality] || quality.toUpperCase();
     }
     
     async function fetchFromAPI(url) {
@@ -900,11 +814,12 @@
         const data = await response.json();
         console.log('API Response:', data);
         
-        if (data && (data.video || data.medias || data.url)) {
+        // নতুন স্ট্রাকচার চেক
+        if (data && data.medias && Array.isArray(data.medias) && data.medias.length > 0) {
           displayResult(data, url);
           showStatus('✅ Ready to download!', '#39ff14');
         } else {
-          throw new Error('No download link found');
+          throw new Error('No medias found in response');
         }
         
       } catch (error) {
@@ -913,7 +828,8 @@
         resultContainer.innerHTML = `
           <div class="error-note">
             <i class="fas fa-exclamation-triangle"></i> 
-            API limit exceed ba link invalid. Example link try koro!
+            API error ba invalid link. Example link try koro!<br>
+            <small style="display:block; margin-top:10px; color:#aaa;">${error.message}</small>
           </div>
         `;
       } finally {
@@ -922,79 +838,14 @@
     }
     
     function displayResult(data, originalUrl) {
-      let thumbnail = '';
-      let title = 'Video';
+      const thumbnail = data.thumbnail || 'https://via.placeholder.com/75/1a1a2e/00f7ff?text=VIDEO';
+      const title = data.title || 'Untitled';
+      const author = data.author || data.uploader || 'Unknown';
+      const duration = formatDuration(data.duration);
       
-      // Extract thumbnail and title
-      if (data.thumbnail) {
-        thumbnail = data.thumbnail;
-      } else if (data.thumb) {
-        thumbnail = data.thumb;
-      } else {
-        thumbnail = 'https://via.placeholder.com/75/1a1a2e/00f7ff?text=VIDEO';
-      }
-      
-      if (data.title) {
-        title = data.title;
-      } else if (data.caption) {
-        title = data.caption;
-      }
-      
-      let downloadLinks = [];
-      
-      // Parse different API response formats
-      if (data.medias && Array.isArray(data.medias)) {
-        data.medias.forEach(media => {
-          if (media.url) {
-            downloadLinks.push({
-              quality: media.quality || media.label || 'Video',
-              url: media.url,
-              type: media.type || 'video'
-            });
-          }
-        });
-      } else if (data.video) {
-        if (Array.isArray(data.video)) {
-          data.video.forEach(v => {
-            downloadLinks.push({
-              quality: v.quality || 'Video',
-              url: v.url || v,
-              type: 'video'
-            });
-          });
-        } else if (typeof data.video === 'string') {
-          downloadLinks.push({
-            quality: 'HD',
-            url: data.video,
-            type: 'video'
-          });
-        }
-      } else if (data.url) {
-        downloadLinks.push({
-          quality: 'Video',
-          url: data.url,
-          type: 'video'
-        });
-      }
-      
-      // Add audio if available
-      if (data.audio) {
-        downloadLinks.push({
-          quality: 'Audio MP3',
-          url: typeof data.audio === 'string' ? data.audio : data.audio.url,
-          type: 'audio'
-        });
-      }
-      
-      if (downloadLinks.length === 0) {
-        resultContainer.innerHTML = `
-          <div class="error-note">
-            <i class="fas fa-exclamation-circle"></i> 
-            Link paowa jayni. API response check koro console e.
-          </div>
-        `;
-        return;
-      }
+      // Separate video and audio
+      const videoMedias = data.medias.filter(m => m.type === 'video' || !m.type);
+      const audioMedias = data.medias.filter(m => m.type === 'audio');
       
       // Build HTML
       let html = `
@@ -1002,30 +853,58 @@
           <div class="media-header">
             <img class="thumbnail" src="${thumbnail}" alt="thumb" onerror="this.src='https://via.placeholder.com/75/1a1a2e/00f7ff?text=VIDEO'">
             <div class="media-info">
-              <h3>${escapeHtml(title.substring(0, 60))}${title.length > 60 ? '...' : ''}</h3>
+              <h3>${escapeHtml(title.substring(0, 50))}${title.length > 50 ? '...' : ''}</h3>
               <div class="media-meta">
-                <span><i class="fas fa-link"></i> ${getPlatform(originalUrl)}</span>
-                <span><i class="fas fa-download"></i> ${downloadLinks.length} options</span>
+                <span><i class="fas fa-user"></i> ${escapeHtml(author.substring(0, 20))}</span>
+                ${duration ? `<span><i class="fas fa-clock"></i> ${duration}</span>` : ''}
+                <span><i class="fas fa-globe"></i> ${getPlatform(originalUrl)}</span>
               </div>
             </div>
           </div>
           <div class="download-grid">
       `;
       
-      downloadLinks.forEach((link, index) => {
-        const isAudio = link.type === 'audio';
+      // Video options
+      videoMedias.forEach((media, index) => {
+        const qualityLabel = getQualityLabel(media.quality);
+        const sizeText = media.data_size ? ` (${formatFileSize(media.data_size)})` : '';
+        const ext = media.extension || 'mp4';
+        
         html += `
-          <div class="download-item ${isAudio ? 'audio-download' : ''}">
+          <div class="download-item">
             <div class="quality-badge">
-              <i class="fas ${isAudio ? 'fa-music' : 'fa-video'}"></i>
-              <span>${escapeHtml(link.quality)} ${isAudio ? '' : ''}</span>
+              <i class="fas fa-video"></i>
+              <span>${qualityLabel}${sizeText}</span>
             </div>
-            <button class="download-btn" data-url="${escapeHtml(link.url)}" data-filename="jackbhaiya_${Date.now()}_${index}.${isAudio ? 'mp3' : 'mp4'}">
+            <button class="download-btn" data-url="${escapeHtml(media.url)}" data-filename="jackbhaiya_${author.replace(/[^a-z0-9]/gi,'_')}_${index}.${ext}">
               <i class="fas fa-download"></i> DOWNLOAD
             </button>
           </div>
         `;
       });
+      
+      // Audio options
+      audioMedias.forEach((media, index) => {
+        const qualityLabel = getQualityLabel(media.quality);
+        const sizeText = media.data_size ? ` (${formatFileSize(media.data_size)})` : '';
+        const ext = media.extension || 'mp3';
+        
+        html += `
+          <div class="download-item audio-item">
+            <div class="quality-badge">
+              <i class="fas fa-music"></i>
+              <span>${qualityLabel}${sizeText}</span>
+            </div>
+            <button class="download-btn" data-url="${escapeHtml(media.url)}" data-filename="jackbhaiya_${author.replace(/[^a-z0-9]/gi,'_')}_audio_${index}.${ext}">
+              <i class="fas fa-download"></i> DOWNLOAD
+            </button>
+          </div>
+        `;
+      });
+      
+      if (videoMedias.length === 0 && audioMedias.length === 0) {
+        html += `<div class="error-note"><i class="fas fa-exclamation-circle"></i> No download links found</div>`;
+      }
       
       html += `
           </div>
@@ -1036,7 +915,7 @@
       
       // Add download listeners
       document.querySelectorAll('.download-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+        btn.addEventListener('click', function() {
           const url = this.dataset.url;
           const filename = this.dataset.filename;
           downloadFile(url, filename);
@@ -1055,7 +934,7 @@
       if (url.includes('instagram')) return 'Instagram';
       if (url.includes('facebook')) return 'Facebook';
       if (url.includes('youtube') || url.includes('youtu.be')) return 'YouTube';
-      return 'Social Media';
+      return 'Social';
     }
     
     function downloadFile(url, filename) {
@@ -1068,9 +947,7 @@
       document.body.removeChild(a);
       
       showStatus(`⬇️ Download started: ${filename}`, '#39ff14');
-      setTimeout(() => {
-        showStatus('✅ Ready for next!', '#00f7ff');
-      }, 3000);
+      setTimeout(() => showStatus('✅ Ready for next!', '#00f7ff'), 3000);
     }
     
   })();
