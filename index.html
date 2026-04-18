@@ -4,26 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
   <title>🎮 JACK BHAIYA · NEON GAMING</title>
-  <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- FFmpeg WASM for client-side merging -->
-  <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.min.js"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', 'Poppins', 'Rajdhani', system-ui, sans-serif;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Poppins', 'Rajdhani', system-ui, sans-serif; }
     body {
       min-height: 100vh;
-      background: #000000;
-      background-image: 
-        radial-gradient(circle at 20% 20%, rgba(0, 150, 255, 0.12) 0%, transparent 35%),
-        radial-gradient(circle at 80% 30%, rgba(180, 0, 255, 0.1) 0%, transparent 40%),
-        radial-gradient(circle at 40% 85%, rgba(0, 255, 150, 0.06) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(255, 50, 150, 0.08) 0%, transparent 35%);
+      background: #0a0a0a;
+      background-image: radial-gradient(circle at 30% 30%, rgba(0, 150, 255, 0.08) 0%, transparent 50%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -31,582 +18,176 @@
       position: relative;
       overflow-x: hidden;
     }
-
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: repeating-linear-gradient(0deg, rgba(0,255,255,0.02) 0px, transparent 2px, transparent 4px);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    /* ---------- SPLASH SCREEN ---------- */
-    #splashScreen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #000000;
-      z-index: 9999;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1);
-      pointer-events: none;
-      background-image: 
-        radial-gradient(circle at 30% 40%, rgba(0, 100, 255, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 70% 60%, rgba(180, 0, 255, 0.12) 0%, transparent 50%);
-    }
-
-    .splash-text {
-      font-size: clamp(3.5rem, 12vw, 5.5rem);
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 8px;
-      text-shadow: 0 0 20px #00a6ff, 0 0 45px #003cff, 0 0 80px #6f00ff;
-      color: #ffffff;
-      opacity: 0;
-      transform: scale(0.9);
-      animation: splashFade 0.8s ease-out forwards;
-      text-align: center;
-      line-height: 1.4;
-      background: linear-gradient(135deg, #a0e9ff, #c1a0ff, #7df9b3);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .splash-sub {
-      font-size: 1.4rem;
-      color: #b0d0ff;
-      margin-top: 25px;
-      opacity: 0;
-      animation: fadeInLate 1s 0.5s forwards;
-      letter-spacing: 5px;
-      text-shadow: 0 0 20px #4a9eff;
-      text-transform: uppercase;
-    }
-
-    @keyframes splashFade {
-      0% { opacity: 0; transform: scale(0.85); filter: blur(5px); }
-      100% { opacity: 1; transform: scale(1); filter: blur(0); }
-    }
-
-    @keyframes fadeInLate {
-      0% { opacity: 0; transform: translateY(12px); }
-      100% { opacity: 0.9; transform: translateY(0); }
-    }
-
-    /* ---------- MAIN CONTAINER ---------- */
-    #mainContent {
-      max-width: 560px;
-      width: 100%;
-      margin: 0 auto;
-      position: relative;
-      z-index: 10;
-      opacity: 0;
-      transform: translateY(25px);
-      transition: opacity 0.7s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.7s ease;
-    }
-
-    #mainContent.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .gaming-card {
-      background: rgba(3, 8, 18, 0.7);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1.5px solid rgba(0, 200, 255, 0.25);
-      border-radius: 42px;
-      padding: 28px 22px 35px;
-      box-shadow: 
-        0 0 40px rgba(0, 160, 255, 0.25),
-        0 15px 40px rgba(0, 0, 0, 0.8),
-        inset 0 0 30px rgba(80, 180, 255, 0.08);
-      transition: box-shadow 0.3s;
-    }
-
-    .neon-title {
-      text-align: center;
-      font-size: 3.4rem;
-      font-weight: 900;
-      letter-spacing: 6px;
-      text-transform: uppercase;
-      color: #ffffff;
-      text-shadow: 
-        0 0 12px #00c8ff,
-        0 0 30px #0066ff,
-        0 0 55px #8a2be2,
-        0 0 90px #b300ff;
-      margin-bottom: 25px;
-      line-height: 1.2;
-      word-break: break-word;
-      animation: neonPulse 2.4s infinite alternate;
-    }
-
-    @keyframes neonPulse {
-      0% { text-shadow: 0 0 8px #00d4ff, 0 0 22px #2a6eff, 0 0 40px #a04eff, 0 0 70px #c85bff; }
-      100% { text-shadow: 0 0 18px #6ee7ff, 0 0 40px #3f7cff, 0 0 70px #c06eff, 0 0 100px #e066ff; }
-    }
-
-    .downloader-section {
-      margin-bottom: 30px;
-      border-bottom: 1px dashed #2f7fb0;
-      padding-bottom: 24px;
-    }
-
-    .section-label {
-      color: #aad0ff;
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 18px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-shadow: 0 0 10px #0088ff;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    .section-label i {
-      color: #2ad4ff;
-      filter: drop-shadow(0 0 12px cyan);
-    }
-
-    .url-box {
-      display: flex;
-      align-items: center;
-      background: #0b121fcc;
-      border-radius: 60px;
-      padding: 4px 4px 4px 22px;
-      border: 2px solid #1e90ff;
-      box-shadow: 0 0 20px #0044ff66, inset 0 0 8px #00a6ff;
-      margin-bottom: 18px;
-    }
-
-    .url-box i {
-      color: #2ad4ff;
-      font-size: 1.3rem;
-      margin-right: 10px;
-      text-shadow: 0 0 10px cyan;
-    }
-
-    #videoUrl {
-      flex: 1;
-      background: transparent;
-      border: none;
-      outline: none;
-      font-size: 1rem;
-      padding: 16px 0;
-      color: #f0f9ff;
-      font-weight: 500;
-    }
-
-    #videoUrl::placeholder {
-      color: #7c9ec0;
-      font-weight: 300;
-    }
-
-    .paste-btn {
-      background: #132237;
-      border: 1px solid #3e7eb0;
-      width: 52px;
-      height: 52px;
-      border-radius: 50px;
-      color: #aad0ff;
-      font-size: 1.3rem;
-      cursor: pointer;
-      margin-right: 5px;
-      box-shadow: 0 0 12px #2a9eff;
-      transition: 0.15s;
-    }
-
-    .paste-btn:hover, .paste-btn:active {
-      background: #1e3b60;
-      color: white;
-      box-shadow: 0 0 22px #3ea0ff;
-    }
-
-    .fetch-btn {
-      background: linear-gradient(145deg, #001d3d, #000b1a);
-      border: 2px solid #1e88e5;
-      color: #e6f2ff;
-      padding: 16px 24px;
-      border-radius: 60px;
-      font-size: 1.25rem;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      cursor: pointer;
-      box-shadow: 0 0 25px #0044ff, 0 5px 0 #001b36;
-      transition: 0.15s;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      width: 100%;
-    }
-
-    .fetch-btn i {
-      color: #ffd966;
-      text-shadow: 0 0 10px gold;
-    }
-
-    .fetch-btn:active {
-      transform: translateY(3px);
-      box-shadow: 0 0 35px #1e6ef0, 0 2px 0 #001b36;
-    }
-
-    .fetch-btn:disabled {
-      opacity: 0.5;
-      transform: none;
-      box-shadow: 0 0 10px #1e3f70;
-    }
-
-    .status-area {
-      min-height: 40px;
-      margin: 15px 0 8px;
-    }
-
-    .loader {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      color: #b0e0ff;
-    }
-
-    .spinner {
-      width: 24px;
-      height: 24px;
-      border: 3px solid #1e4970;
-      border-top-color: #2ad4ff;
-      border-radius: 30px;
-      animation: spin 1s linear infinite;
-      box-shadow: 0 0 15px cyan;
-    }
-
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    .error-message {
-      background: #2c0b1ecc;
-      backdrop-filter: blur(8px);
-      color: #ffa3b7;
-      padding: 14px 18px;
-      border-radius: 40px;
-      border-left: 6px solid #ff3b6f;
-      text-shadow: 0 0 5px red;
-      font-size: 0.9rem;
-    }
-
-    .progress-bar {
-      width: 100%;
-      height: 6px;
-      background: #1a2a4a;
-      border-radius: 10px;
-      margin: 10px 0;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #2ad4ff, #b44dff);
-      border-radius: 10px;
-      width: 0%;
-      transition: width 0.3s;
-      box-shadow: 0 0 15px #2ad4ff;
-    }
-
-    .preview-card {
-      margin-top: 20px;
-      border-radius: 32px;
-      background: #0b1422e0;
-      backdrop-filter: blur(12px);
-      border: 1px solid #3f8dff;
-      overflow: hidden;
-      box-shadow: 0 0 30px #002c77;
-    }
-
-    .media-header {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 18px;
-      background: #030b14b3;
-    }
-
-    .thumbnail {
-      width: 60px;
-      height: 60px;
-      border-radius: 18px;
-      object-fit: cover;
-      border: 2px solid #2ad4ff;
-      box-shadow: 0 0 20px #0084ff;
-    }
-
-    .info h3 {
-      color: white;
-      text-shadow: 0 0 10px #3f9eff;
-      font-size: 1.1rem;
-    }
-
-    .author { color: #b8d6ff; margin-top: 5px; }
-    .badge-platform {
-      background: #142c47;
-      border-radius: 40px;
-      padding: 4px 16px;
-      color: #9dcbff;
-      border: 1px solid #2f9eff;
-    }
-
-    .download-section { padding: 18px; }
-    .media-item {
-      background: #0b1a2bc9;
-      border-radius: 50px;
-      padding: 14px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border: 1px solid #2f80ed;
-      margin-bottom: 10px;
-      backdrop-filter: blur(8px);
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .media-info {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .quality-tag {
-      background: #0a1e3f;
-      color: #aad0ff;
-      padding: 5px 16px;
-      border-radius: 40px;
-      border: 1px solid #1e90ff;
-    }
-
-    .audio-badge {
-      background: #2a1e4f;
-      color: #b8a0ff;
-      padding: 5px 12px;
-      border-radius: 40px;
-      border: 1px solid #9b59b6;
-      font-size: 0.85rem;
-    }
-
-    .download-btn {
-      background: #00337a;
-      border: 1px solid #3eb5ff;
-      color: white;
-      padding: 12px 20px;
-      border-radius: 40px;
-      font-weight: bold;
-      box-shadow: 0 0 15px #006eff;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .download-btn.merging {
-      background: #4e3b8c;
-      border-color: #b44dff;
-    }
-
-    .download-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
+    #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease; pointer-events: none; }
+    .splash-text { font-size: clamp(3rem, 10vw, 4.5rem); font-weight: 900; text-transform: uppercase; letter-spacing: 6px; background: linear-gradient(135deg, #a0e9ff, #c1a0ff); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 0 20px #00a6ff; animation: simpleFade 0.6s ease-out forwards; }
+    .splash-sub { font-size: 1.2rem; color: #b0d0ff; margin-top: 20px; opacity: 0; animation: simpleFade 0.5s 0.4s forwards; letter-spacing: 4px; }
+    @keyframes simpleFade { 0% { opacity: 0; } 100% { opacity: 1; } }
+    #mainContent { max-width: 560px; width: 100%; margin: 0 auto; position: relative; z-index: 10; opacity: 0; transition: opacity 0.4s ease; }
+    #mainContent.visible { opacity: 1; }
+    .tabs-container { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(5, 10, 20, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid #2ad4ff; padding: 8px 0; box-shadow: 0 0 15px rgba(0, 102, 255, 0.3); }
+    .tabs-wrapper { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding: 5px 15px; gap: 8px; }
+    .tabs-wrapper::-webkit-scrollbar { display: none; }
+    .tab-item { flex-shrink: 0; padding: 10px 20px; background: #0a1a3a; border: 1px solid #2ad4ff; border-radius: 30px; color: #fff; font-weight: bold; font-size: 1rem; cursor: pointer; transition: background 0.15s; box-shadow: 0 0 10px rgba(0, 102, 255, 0.3); display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+    .tab-item:active { background: #1a3a6a; }
+    .tab-item.active { background: #0066cc; border-color: #7df9ff; }
+    .visitor-badge-tab { background: #ff2b9e; color: white; border-radius: 15px; padding: 2px 7px; font-size: 0.8rem; margin-left: 4px; }
+    .gaming-card { margin-top: 75px; background: rgba(3, 8, 18, 0.75); backdrop-filter: blur(15px); border: 1px solid rgba(0, 200, 255, 0.2); border-radius: 35px; padding: 25px 20px 30px; box-shadow: 0 0 25px rgba(0, 160, 255, 0.15); }
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .visitor-modal, .profile-modal, .leaderboard-modal, .auth-modal { background: #0a1525; border: 1px solid #2ad4ff; border-radius: 25px; padding: 20px; max-width: 480px; width: 90%; max-height: 75vh; overflow-y: auto; box-shadow: 0 0 30px rgba(0, 102, 255, 0.3); transform: scale(0.95); transition: transform 0.2s; }
+    .modal-overlay.active .visitor-modal, .modal-overlay.active .profile-modal, .modal-overlay.active .leaderboard-modal, .modal-overlay.active .auth-modal { transform: scale(1); }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; color: #fff; }
+    .modal-header h2 { font-size: 1.6rem; display: flex; align-items: center; gap: 8px; }
+    .close-btn { background: none; border: none; color: #fff; font-size: 22px; cursor: pointer; padding: 5px 8px; }
+    .auth-input, .profile-input { width: 100%; padding: 12px 16px; background: #0b1a2b; border: 1px solid #2ad4ff; border-radius: 30px; color: #fff; font-size: 16px; outline: none; box-shadow: inset 0 0 5px #001e3c; transition: border 0.1s; -webkit-appearance: none; }
+    .auth-input:focus, .profile-input:focus { border-color: #7df9ff; }
+    .auth-btn, .save-profile-btn, .fetch-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #0066cc, #004499); border: none; border-radius: 30px; color: white; font-weight: bold; font-size: 16px; cursor: pointer; box-shadow: 0 0 15px rgba(0, 102, 255, 0.3); transition: transform 0.1s, box-shadow 0.1s; }
+    .auth-btn:active, .save-profile-btn:active, .fetch-btn:active { transform: scale(0.98); box-shadow: 0 0 20px rgba(0, 102, 255, 0.5); }
+    .leaderboard-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: rgba(10, 30, 50, 0.5); border-radius: 12px; margin-bottom: 6px; border: 1px solid #1e90ff; }
+    .leaderboard-item.current-user { border: 2px solid #2ad4ff; background: rgba(0, 100, 255, 0.2); }
+    .leaderboard-item.top1-item { border: 2px solid #ffd700; background: rgba(255, 215, 0, 0.08); }
+    .leaderboard-rank { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 16px; background: #1a3a6a; color: #fff; }
+    .leaderboard-rank.top1 { background: linear-gradient(135deg, #ffd700, #ffaa00); color: #000; }
+    .rank-badge-icon { width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 13px; margin: 0 4px; }
+    /* Rank Colors */
+    .rank-silver { color: #c0c0c0 !important; text-shadow: 0 0 10px #c0c0c0; }
+    .rank-gold { color: #ffd700 !important; text-shadow: 0 0 12px #ffd700; }
+    .rank-platinum { color: #e5e4e2 !important; text-shadow: 0 0 12px #e5e4e2; }
+    .rank-diamond { color: #b9f2ff !important; text-shadow: 0 0 15px #00bfff; }
+    .rank-master { color: #ffd700 !important; text-shadow: 0 0 20px #ffd700, 0 0 40px #ffaa00; font-weight: 900; }
+    .rank-grandmaster { color: #ffaa00 !important; text-shadow: 0 0 25px #ffd700, 0 0 50px #ff5500, 0 0 75px #ff0000; font-weight: 900; }
+    .badge-silver { background: linear-gradient(135deg, #c0c0c0, #808080); box-shadow: 0 0 15px #c0c0c0; }
+    .badge-gold { background: linear-gradient(135deg, #ffd700, #b8860b); box-shadow: 0 0 15px #ffd700; }
+    .badge-platinum { background: linear-gradient(135deg, #e5e4e2, #a8a8a8); box-shadow: 0 0 15px #e5e4e2; }
+    .badge-diamond { background: linear-gradient(135deg, #b9f2ff, #00bfff); box-shadow: 0 0 20px #00bfff; }
+    .badge-master { background: linear-gradient(135deg, #ffd700, #ff8c00); box-shadow: 0 0 25px #ffd700, 0 0 40px #ffaa00; }
+    .badge-grandmaster { background: linear-gradient(135deg, #ff5500, #ff0000); box-shadow: 0 0 30px #ffd700, 0 0 60px #ff5500; }
+    .v-badge { display: inline-flex; margin-right: 4px; }
+    .v-badge svg { width: 24px; height: 24px; filter: drop-shadow(0 0 8px #ffd700); }
+    .url-box { display: flex; align-items: center; background: #0b121f; border-radius: 40px; padding: 3px 3px 3px 18px; border: 1px solid #1e90ff; margin-bottom: 15px; }
+    #videoUrl { flex: 1; background: transparent; border: none; outline: none; font-size: 15px; padding: 14px 0; color: #f0f9ff; -webkit-appearance: none; }
+    #videoUrl::placeholder { color: #6a8fb0; }
+    .paste-btn { background: #132237; border: 1px solid #3e7eb0; width: 48px; height: 48px; border-radius: 40px; color: #aad0ff; font-size: 1.2rem; cursor: pointer; }
+    .download-btn { background: #00337a; border: 1px solid #3eb5ff; color: white; padding: 8px 16px; border-radius: 30px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; }
+    .download-btn:active { background: #0044aa; }
+    .neon-title { text-align: center; font-size: 2.8rem; font-weight: 900; letter-spacing: 4px; text-transform: uppercase; color: #fff; text-shadow: 0 0 15px #00c8ff, 0 0 30px #0066ff; margin-bottom: 20px; }
     .hidden { display: none !important; }
-
-    .relationship-section {
-      text-align: center;
-      margin-top: 10px;
-    }
-
-    .couple-text {
-      font-size: 2rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #ff6ec7, #b87eff, #6ee7ff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      margin-bottom: 20px;
-      text-shadow: 0 0 30px #ff44e6, 0 0 60px #7a4dff;
-      letter-spacing: 2px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-    }
-
-    .couple-text i {
-      color: #ff2b9e;
-      text-shadow: 0 0 20px #ff00c8;
-      font-size: 2rem;
-    }
-
-    .support-btn-wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 8px 0 5px;
-    }
-
-    .support-btn {
-      background: rgba(10, 20, 40, 0.7);
-      border: 2px solid;
-      border-radius: 60px;
-      padding: 18px 38px;
-      font-size: 1.4rem;
-      font-weight: bold;
-      color: #eaf6ff;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 14px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 0 30px #0077ff, 0 6px 0 #001e3c, 0 12px 30px #000000b0;
-      border-color: #2ad4ff #b44dff #ff3b9a #2ad4ff;
-      transition: 0.18s;
-      text-shadow: 0 0 8px black;
-      letter-spacing: 2px;
-      margin-bottom: 8px;
-    }
-
-    .support-btn i {
-      color: #ffd966;
-      filter: drop-shadow(0 0 12px gold);
-      font-size: 1.5rem;
-    }
-
-    .support-btn:hover, .support-btn:active {
-      transform: scale(1.02);
-      box-shadow: 0 0 45px #3f9eff, 0 8px 0 #002856, 0 12px 30px black;
-      background: #101a2e;
-      border-color: #7df9ff #d08eff #ff80bf;
-    }
-
-    .customer-care {
-      color: #8ab3ff;
-      font-size: 0.9rem;
-      text-shadow: 0 0 6px #0055ff;
-      letter-spacing: 1px;
-      margin-top: 8px;
-      opacity: 0.9;
-    }
-
-    .footnote {
-      text-align: center;
-      margin-top: 30px;
-      color: #4373a8;
-      font-size: 0.75rem;
-      text-shadow: 0 0 4px #1e90ff;
-    }
-
-    @media (max-width: 480px) {
-      .gaming-card { padding: 20px 16px; }
-      .neon-title { font-size: 2.6rem; }
-      .couple-text { font-size: 1.6rem; }
-    }
-
-    .note-text {
-      color: #6a9fd8;
-      font-size: 0.8rem;
-      margin-top: 5px;
-      text-align: center;
-    }
+    .auth-error { color: #ff6b9d; font-size: 13px; margin-top: 8px; min-height: 18px; }
+    .auth-form { display: none; }
+    .auth-form.active { display: block; }
+    .auth-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+    .auth-tab { flex: 1; padding: 10px; background: #0b1a2b; border: 1px solid #3f7fb0; border-radius: 25px; color: #fff; cursor: pointer; text-align: center; }
+    .auth-tab.active { background: #0066cc; border-color: #2ad4ff; }
+    .auth-input-group { margin-bottom: 16px; }
+    .auth-input-group label { display: block; color: #aad0ff; margin-bottom: 6px; }
+    .password-input-wrapper { position: relative; }
+    .password-toggle { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #2ad4ff; cursor: pointer; }
+    .total-points-display { background: linear-gradient(135deg, #ffd700, #ff8c00); color: #000; padding: 8px 16px; border-radius: 15px; font-weight: bold; text-align: center; margin: 12px 0; }
+    .gender-selector { display: flex; gap: 10px; margin-top: 8px; }
+    .gender-btn { flex: 1; padding: 10px; background: #0b1a2b; border: 1px solid #3f7fb0; border-radius: 25px; color: #fff; cursor: pointer; }
+    .gender-btn.male.active { background: #0066ff; border-color: #2ad4ff; }
+    .gender-btn.female.active { background: #ff2b9e; border-color: #ff80bf; }
+    .current-user-info { background: rgba(0, 100, 255, 0.15); border-radius: 12px; padding: 10px; margin-bottom: 16px; border: 1px solid #2ad4ff; display: flex; align-items: center; justify-content: space-between; }
+    .logout-btn { background: #ff2b9e; border: none; border-radius: 15px; padding: 6px 14px; color: white; cursor: pointer; font-size: 13px; }
+    .visitor-list, .leaderboard-list { list-style: none; padding: 0; }
+    .visitor-item { display: flex; align-items: center; gap: 10px; padding: 10px; background: rgba(10, 30, 50, 0.5); border-radius: 12px; margin-bottom: 6px; border: 1px solid #1e90ff; }
+    .visitor-name { flex: 1; color: #fff; display: flex; align-items: center; gap: 6px; }
+    .visitor-points { color: #ffd700; font-weight: bold; }
+    .couple-text { font-size: 1.6rem; font-weight: 800; background: linear-gradient(135deg, #ff6ec7, #b87eff); -webkit-background-clip: text; background-clip: text; color: transparent; margin: 15px 0; display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .support-btn { background: rgba(10, 20, 40, 0.7); border: 1px solid #2ad4ff; border-radius: 40px; padding: 12px 24px; font-size: 1.1rem; color: #eaf6ff; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; }
+    .preview-card { margin-top: 16px; border-radius: 25px; background: #0b1422; border: 1px solid #3f8dff; overflow: hidden; }
+    .media-header { display: flex; align-items: center; gap: 12px; padding: 14px; background: #030b14; }
+    .thumbnail { width: 50px; height: 50px; border-radius: 12px; object-fit: cover; border: 1px solid #2ad4ff; }
+    .video-item { background: #0b1a2b; border-radius: 16px; padding: 14px; border: 1px solid #2f80ed; margin-bottom: 10px; }
+    .audio-item { background: #1e1647; border-radius: 16px; padding: 12px 14px; border: 1px solid #9b4dff; display: flex; align-items: center; justify-content: space-between; }
+    .loader { display: flex; align-items: center; gap: 12px; color: #b0e0ff; }
+    .spinner { width: 20px; height: 20px; border: 2px solid #1e4970; border-top-color: #2ad4ff; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (max-width: 480px) { .gaming-card { padding: 18px 14px; } .neon-title { font-size: 2.2rem; } .tab-item { padding: 8px 16px; font-size: 0.9rem; } }
+    .download-option-btn { background: #1a3a6a; border: 1px solid #3eb5ff; color: white; padding: 10px 16px; border-radius: 25px; font-size: 0.9rem; cursor: pointer; margin: 5px; display: inline-block; }
   </style>
 </head>
 <body>
 
-<!-- SPLASH SCREEN -->
 <div id="splashScreen">
-  <div id="splashText1" class="splash-text">Jack Bhaiya</div>
-  <div id="splashText2" class="splash-text" style="display: none;">Just One More</div>
-  <div id="splashText3" class="splash-text" style="display: none;">🎮 Game</div>
+  <div class="splash-text">Jack Bhaiya</div>
   <div class="splash-sub">press any key to skip</div>
 </div>
 
-<!-- MAIN CONTENT -->
+<div class="tabs-container">
+  <div class="tabs-wrapper">
+    <div class="tab-item active" data-tab="downloader"><i class="fas fa-download"></i> DL</div>
+    <div class="tab-item" data-tab="profile"><i class="fas fa-user"></i> Profile</div>
+    <div class="tab-item" data-tab="leaderboard"><i class="fas fa-trophy"></i> Top</div>
+    <div class="tab-item" data-tab="visitors"><i class="fas fa-eye"></i> Visitors <span class="visitor-badge-tab" id="visitorCountTab">0</span></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="authModal">
+  <div class="auth-modal">
+    <div class="modal-header"><h2><i class="fas fa-lock"></i> Login</h2><button class="close-btn" onclick="closeModal('authModal')">&times;</button></div>
+    <div class="auth-tabs"><div class="auth-tab active" onclick="switchAuthTab('register')">Register</div><div class="auth-tab" onclick="switchAuthTab('login')">Login</div></div>
+    <div id="registerForm" class="auth-form active">
+      <div class="auth-input-group"><label>Username</label><input type="text" id="regUsername" class="auth-input" placeholder="Enter username" maxlength="20" autocomplete="off"></div>
+      <div class="auth-input-group"><label>4-Digit PIN</label><div class="password-input-wrapper"><input type="password" id="regPassword" class="auth-input" placeholder="****" maxlength="4" inputmode="numeric" autocomplete="off"><button class="password-toggle" onclick="togglePassword('regPassword')"><i class="fas fa-eye"></i></button></div></div>
+      <div class="auth-input-group"><label>Confirm PIN</label><div class="password-input-wrapper"><input type="password" id="regConfirmPassword" class="auth-input" placeholder="****" maxlength="4" inputmode="numeric" autocomplete="off"><button class="password-toggle" onclick="togglePassword('regConfirmPassword')"><i class="fas fa-eye"></i></button></div></div>
+      <button class="auth-btn" onclick="registerUser()"><i class="fas fa-user-plus"></i> Register</button>
+      <div id="regError" class="auth-error"></div>
+    </div>
+    <div id="loginForm" class="auth-form">
+      <div class="auth-input-group"><label>Username</label><input type="text" id="loginUsername" class="auth-input" placeholder="Enter username" autocomplete="off"></div>
+      <div class="auth-input-group"><label>4-Digit PIN</label><div class="password-input-wrapper"><input type="password" id="loginPassword" class="auth-input" placeholder="****" maxlength="4" inputmode="numeric" autocomplete="off"><button class="password-toggle" onclick="togglePassword('loginPassword')"><i class="fas fa-eye"></i></button></div></div>
+      <button class="auth-btn" onclick="loginUser()"><i class="fas fa-sign-in-alt"></i> Login</button>
+      <div id="loginError" class="auth-error"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="visitorModal">
+  <div class="visitor-modal">
+    <div class="modal-header"><h2><i class="fas fa-users"></i> Online</h2><button class="close-btn" onclick="closeModal('visitorModal')">&times;</button></div>
+    <ul class="visitor-list" id="visitorList"></ul>
+  </div>
+</div>
+
+<div class="modal-overlay" id="profileModal">
+  <div class="profile-modal">
+    <div class="modal-header"><h2><i class="fas fa-user-edit"></i> Profile</h2><button class="close-btn" onclick="closeModal('profileModal')">&times;</button></div>
+    <div id="profileAuthRequired" style="display:none;text-align:center;padding:20px;color:#aad0ff;"><i class="fas fa-lock" style="font-size:40px;"></i><p style="margin:15px 0;">Login to access profile</p><button class="auth-btn" onclick="openAuthModal()">Login / Register</button></div>
+    <div id="profileContent">
+      <div class="current-user-info"><span><i class="fas fa-user-check"></i> <strong id="currentUsername"></strong></span><button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button></div>
+      <div class="total-points-display"><i class="fas fa-star"></i> Points: <span id="userTotalPoints">0</span> · <span id="userRankDisplay">Bronze</span></div>
+      <div class="profile-section">
+        <div class="auth-input-group"><label>Display Name</label><input type="text" id="userNameInput" class="profile-input" placeholder="Your name" maxlength="20" autocomplete="off"></div>
+        <div class="auth-input-group"><label>Gender</label><div class="gender-selector"><button class="gender-btn male" id="maleBtn" onclick="selectGender('male')"><i class="fas fa-mars"></i> Male</button><button class="gender-btn female" id="femaleBtn" onclick="selectGender('female')"><i class="fas fa-venus"></i> Female</button></div></div>
+        <button class="save-profile-btn" onclick="saveProfile()"><i class="fas fa-save"></i> Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="leaderboardModal">
+  <div class="leaderboard-modal">
+    <div class="modal-header"><h2><i class="fas fa-crown"></i> Top Players</h2><button class="close-btn" onclick="closeModal('leaderboardModal')">&times;</button></div>
+    <div style="background:rgba(0,100,255,0.15);border-radius:12px;padding:10px;margin-bottom:15px;text-align:center;color:#fff;"><span id="totalPlayersCount">Loading...</span></div>
+    <ul class="leaderboard-list" id="leaderboardList"></ul>
+  </div>
+</div>
+
 <div id="mainContent">
   <div class="gaming-card">
-    
     <div class="neon-title">JACK BHAIYA</div>
-
     <div class="downloader-section">
-      <div class="section-label">
-        <i class="fas fa-cloud-download-alt"></i> 
-        SOCIAL VIDEO DOWNLOADER
-      </div>
-
-      <div class="url-box">
-        <i class="fas fa-link"></i>
-        <input type="text" id="videoUrl" placeholder="Paste TikTok, IG, YT link..." inputmode="url" enterkeyhint="go">
-        <button class="paste-btn" id="pasteBtn"><i class="far fa-clipboard"></i></button>
-      </div>
-
-      <button class="fetch-btn" id="fetchBtn">
-        <i class="fas fa-download"></i> Jack MEDIA
-      </button>
-
-      <div class="status-area" id="statusArea"></div>
-      <div id="progressContainer" class="hidden">
-        <div class="progress-bar">
-          <div class="progress-fill" id="progressFill"></div>
-        </div>
-        <div id="progressText" style="color:#aad0ff; font-size:0.85rem; text-align:center;"></div>
-      </div>
-
-      <div id="resultContainer" class="preview-card hidden">
-        <div class="media-header">
-          <img id="thumbImg" class="thumbnail" src="" alt="thumb">
-          <div class="info">
-            <h3 id="videoTitle">—</h3>
-            <div class="author">
-              <i class="fas fa-user-astronaut"></i>
-              <span id="authorName">@user</span>
-              <span id="platformBadge" class="badge-platform">tiktok</span>
-            </div>
-          </div>
-        </div>
-        <div class="download-section">
-          <div id="mediaListContainer" class="media-list"></div>
-          <div class="note-text">
-            <i class="fas fa-info-circle"></i> Videos merge with audio automatically
-          </div>
-        </div>
-      </div>
+      <div style="color:#aad0ff;font-size:1.1rem;font-weight:700;margin-bottom:15px;"><i class="fas fa-cloud-download-alt"></i> VIDEO DOWNLOADER</div>
+      <div class="url-box"><i class="fas fa-link" style="color:#2ad4ff;margin-right:8px;"></i><input type="text" id="videoUrl" placeholder="Paste TikTok, YouTube, Instagram link" inputmode="url" enterkeyhint="go" autocomplete="off" value=""><button class="paste-btn" id="pasteBtn"><i class="far fa-clipboard"></i></button></div>
+      <button class="fetch-btn" id="fetchBtn"><i class="fas fa-download"></i> Download Media</button>
+      <div id="statusArea" style="min-height:35px;margin:12px 0;"></div>
+      <div id="resultContainer" class="preview-card hidden"><div class="media-header"><img id="thumbImg" class="thumbnail" src="" alt=""><div class="info"><h3 id="videoTitle">—</h3><div class="author" style="color:#b8d6ff;font-size:0.9rem;"><span id="authorName">@user</span><span id="platformBadge" style="background:#142c47;padding:2px 12px;border-radius:20px;margin-left:8px;">tiktok</span></div></div></div><div class="download-section" style="padding:14px;"><div id="mediaListContainer"></div><div style="color:#6a9fd8;font-size:0.8rem;margin-top:12px;text-align:center;"><i class="fas fa-check-circle" style="color:#2ecc71;"></i> Click to download (+1 point)</div></div></div>
     </div>
-
-    <div class="relationship-section">
-      <div class="couple-text">
-        <i class="fas fa-heart"></i>
-        Jack + Nora Fatehi
-        <i class="fas fa-heart"></i>
-      </div>
-
-      <div class="support-btn-wrapper">
-        <a href="https://www.facebook.com/share/1B2BUTD2Br/" target="_blank" class="support-btn">
-          <i class="fas fa-heart"></i> 💙 Support 24/7 <i class="fas fa-external-link-alt"></i>
-        </a>
-        <div class="customer-care">
-          <i class="fas fa-headset"></i> Any problem contact customer care
-        </div>
-      </div>
-    </div>
-
-    <div class="footnote">
-      ⚡ ONE MORE GAME · NEON EDITION ⚡
+    <div style="text-align:center;margin-top:15px;">
+      <div class="couple-text"><i class="fas fa-heart"></i> Jack + Nora Fatehi <i class="fas fa-heart"></i></div>
+      <a href="https://www.facebook.com/share/1B2BUTD2Br/" target="_blank" class="support-btn"><i class="fas fa-heart"></i> 💙 Support 24/7</a>
+      <div style="color:#8ab3ff;font-size:0.8rem;margin-top:8px;"><i class="fas fa-headset"></i> Contact customer care</div>
     </div>
   </div>
 </div>
@@ -615,355 +196,275 @@
   (function(){
     "use strict";
 
-    // ---------- SPLASH SCREEN ----------
     const splash = document.getElementById('splashScreen');
     const mainContent = document.getElementById('mainContent');
-    const text1 = document.getElementById('splashText1');
-    const text2 = document.getElementById('splashText2');
-    const text3 = document.getElementById('splashText3');
+    setTimeout(() => { splash.style.opacity = '0'; setTimeout(() => { splash.style.display = 'none'; mainContent.classList.add('visible'); }, 400); }, 2000);
+    window.addEventListener('keydown', () => { if(splash.style.display !== 'none') { splash.style.opacity = '0'; setTimeout(() => { splash.style.display = 'none'; mainContent.classList.add('visible'); }, 300); } }, { once: true });
 
-    let sequenceTimer;
+    const vBadgeSVG = `<svg width="22" height="22" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="url(#g)" stroke="#ffd700" stroke-width="2"/><defs><linearGradient id="g"><stop offset="0%" stop-color="#ffd700"/><stop offset="100%" stop-color="#ffaa00"/></linearGradient></defs><text x="20" y="28" font-size="22" font-weight="900" fill="#000" text-anchor="middle">V</text></svg>`;
 
-    function startSplashSequence() {
-      text1.style.display = 'block';
-      text2.style.display = 'none';
-      text3.style.display = 'none';
-
-      sequenceTimer = setTimeout(() => {
-        text1.style.display = 'none';
-        text2.style.display = 'block';
-        
-        sequenceTimer = setTimeout(() => {
-          text2.style.display = 'none';
-          text3.style.display = 'block';
-          
-          sequenceTimer = setTimeout(() => {
-            hideSplash();
-          }, 900);
-        }, 900);
-      }, 900);
+    // RANK SYSTEM
+    function getRankFromPoints(points) {
+      if (points >= 110) return { name: 'Grandmaster', badge: 'grandmaster', icon: '👑', class: 'rank-grandmaster' };
+      if (points >= 80) return { name: 'Master', badge: 'master', icon: '⭐', class: 'rank-master' };
+      if (points >= 50) return { name: 'Diamond', badge: 'diamond', icon: '💎', class: 'rank-diamond' };
+      if (points >= 40) return { name: 'Platinum', badge: 'platinum', icon: '🔷', class: 'rank-platinum' };
+      if (points >= 20) return { name: 'Gold', badge: 'gold', icon: '🥇', class: 'rank-gold' };
+      if (points >= 10) return { name: 'Silver', badge: 'silver', icon: '🥈', class: 'rank-silver' };
+      return { name: 'Bronze', badge: 'bronze', icon: '🥉', class: '' };
     }
 
-    function hideSplash() {
-      splash.style.opacity = '0';
-      setTimeout(() => {
-        splash.style.display = 'none';
-        mainContent.classList.add('visible');
-      }, 500);
-      if (sequenceTimer) clearTimeout(sequenceTimer);
-    }
-
-    function skipSplashHandler(e) {
-      if (splash.style.display !== 'none') {
-        if (sequenceTimer) clearTimeout(sequenceTimer);
-        hideSplash();
+    class SecureUserSystem {
+      constructor() {
+        this.users = JSON.parse(localStorage.getItem('su') || '{}');
+        this.currentUser = localStorage.getItem('cu') || null;
       }
+      save() { localStorage.setItem('su', JSON.stringify(this.users)); }
+      hash(p) { let h = 0; for(let i=0;i<p.length;i++) h = ((h<<5)-h)+p.charCodeAt(i); return h.toString(16); }
+      register(u, p) {
+        u = u.trim().toLowerCase();
+        if(!u||u.length<3||!/^[a-z0-9_]+$/.test(u)||!p||p.length!==4||!/^\d{4}$/.test(p)) throw new Error('Invalid input');
+        if(this.users[u]) throw new Error('Username taken');
+        this.users[u] = {password:this.hash(p), points:0, profile:{name:u,gender:null}};
+        this.save(); return true;
+      }
+      login(u, p) {
+        u = u.trim().toLowerCase();
+        const user = this.users[u];
+        if(!user||user.password!==this.hash(p)) throw new Error('Invalid credentials');
+        this.currentUser = u; localStorage.setItem('cu', u); return user;
+      }
+      logout() { this.currentUser = null; localStorage.removeItem('cu'); }
+      isLoggedIn() { return this.currentUser && this.users[this.currentUser]; }
+      getCurrent() { return this.isLoggedIn() ? this.users[this.currentUser] : null; }
+      addPoint() {
+        if(this.isLoggedIn()) { this.users[this.currentUser].points++; this.save(); return this.users[this.currentUser].points; }
+        let gp = parseInt(localStorage.getItem('gp')||'0')+1; localStorage.setItem('gp', gp);
+        const gid = localStorage.getItem('vid')||'g'; 
+        if(!this.users['g_'+gid]) this.users['g_'+gid] = {points:gp, profile:{name:'Guest_'+gid.slice(-4),gender:null}, isGuest:true};
+        else this.users['g_'+gid].points = gp;
+        this.save(); return gp;
+      }
+      updateProfile(n, g) { if(this.isLoggedIn()) { this.users[this.currentUser].profile = {name:n, gender:g}; this.save(); } }
+      getAll() { return Object.entries(this.users).map(([u,d])=>({username:u, points:d.points||0, profile:d.profile||{name:u}, isGuest:d.isGuest})).sort((a,b)=>b.points-a.points); }
     }
 
-    window.addEventListener('keydown', skipSplashHandler);
-    splash.addEventListener('click', skipSplashHandler);
-    startSplashSequence();
+    const userSystem = new SecureUserSystem();
 
-    // ---------- FFMPEG WASM INIT ----------
-    const { FFmpeg } = FFmpegWASM;
-    const ffmpeg = new FFmpeg();
-    
-    let ffmpegLoaded = false;
-    const loadFFmpeg = async () => {
-      if (ffmpegLoaded) return true;
-      try {
-        setStatus('<div class="loader"><div class="spinner"></div><span>Loading FFmpeg (~25MB)...</span></div>');
-        await ffmpeg.load({
-          coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.4/dist/umd/ffmpeg-core.js',
+    class VisitorSystem {
+      constructor() {
+        this.visitors = new Map();
+        this.uid = localStorage.getItem('vid') || (()=>{const i='v_'+Date.now()+'_'+Math.random().toString(36).substr(2,4); localStorage.setItem('vid',i); return i;})();
+        this.ch = new BroadcastChannel('vc2');
+        this.setup();
+        this.updateCount();
+      }
+      getData() {
+        if(userSystem.isLoggedIn()) { const d=userSystem.getCurrent(); return {name:d.profile.name, gender:d.profile.gender, points:d.points, uname:userSystem.currentUser}; }
+        return {name:'Guest_'+this.uid.slice(-4), gender:null, points:parseInt(localStorage.getItem('gp')||'0'), uname:'g_'+this.uid};
+      }
+      setup() {
+        const announce = () => { const d=this.getData(); this.ch.postMessage({t:'p', uid:this.uid, profile:d, points:d.points, uname:d.uname, ts:Date.now()}); };
+        announce(); this.int1 = setInterval(announce, 4000);
+        this.ch.onmessage = (e) => { if(e.data.t==='p') { this.visitors.set(e.data.uid, {...e.data, last:Date.now()}); this.updateDisplay(); } };
+        const d=this.getData(); this.visitors.set(this.uid, {uid:this.uid, profile:d, points:d.points, uname:d.uname, last:Date.now()});
+        this.int2 = setInterval(() => { const n=Date.now(); let c=false; for(const[k,v] of this.visitors) if(n-v.last>10000) { this.visitors.delete(k); c=true; } if(c) this.updateDisplay(); }, 5000);
+      }
+      addPoint() { const p=userSystem.addPoint(); const s=this.visitors.get(this.uid); if(s){s.points=p; s.profile=this.getData();} this.updateDisplay(); return p; }
+      updateCount() { document.getElementById('visitorCountTab').textContent = this.visitors.size; }
+      updateDisplay() {
+        this.updateCount();
+        if(document.getElementById('visitorModal').classList.contains('active')) this.renderVisitors();
+        if(document.getElementById('leaderboardModal').classList.contains('active')) this.renderLeaderboard();
+        if(document.getElementById('profileModal').classList.contains('active') && userSystem.isLoggedIn()) {
+          const d=userSystem.getCurrent(); 
+          document.getElementById('userTotalPoints').textContent = d.points;
+          document.getElementById('userRankDisplay').textContent = getRankFromPoints(d.points).name;
+        }
+      }
+      renderVisitors() {
+        const list = document.getElementById('visitorList');
+        const v = Array.from(this.visitors.values()).sort((a,b)=>b.points-a.points);
+        let h = '';
+        v.forEach((vis,i)=>{
+          const r = getRankFromPoints(vis.points);
+          const c = vis.profile.gender==='male'?'#4da6ff':vis.profile.gender==='female'?'#ff80bf':'#fff';
+          const g = vis.profile.gender==='male'?'<i class="fas fa-mars" style="color:#4da6ff;"></i>':vis.profile.gender==='female'?'<i class="fas fa-venus" style="color:#ff80bf;"></i>':'';
+          h += `<li class="visitor-item"><span class="rank-badge-icon badge-${r.badge}">${r.icon}</span><span class="visitor-name" style="color:${c}">${i===0?'<span class="v-badge">'+vBadgeSVG+'</span>':''}<span class="${r.class}">${vis.profile.name}</span> ${g} ${vis.uid===this.uid?' (You)':''}</span><span class="visitor-points">${vis.points} pts</span></li>`;
         });
-        ffmpegLoaded = true;
-        setStatus('');
-        return true;
-      } catch (e) {
-        console.warn('FFmpeg load failed:', e);
-        setStatus('<div class="error-message">FFmpeg failed. Using direct download.</div>');
-        return false;
+        list.innerHTML = h;
       }
+      renderLeaderboard() {
+        const all = userSystem.getAll();
+        const cur = userSystem.isLoggedIn() ? userSystem.currentUser : ('g_'+this.uid);
+        const list = document.getElementById('leaderboardList');
+        document.getElementById('totalPlayersCount').innerHTML = `Players: ${all.length} | Your Rank: #${all.findIndex(u=>u.username===cur)+1||'N/A'}`;
+        let h = '';
+        all.slice(0,50).forEach((u,i)=>{
+          const r = getRankFromPoints(u.points);
+          const isTop1 = i===0;
+          const c = u.profile.gender==='male'?'#4da6ff':u.profile.gender==='female'?'#ff80bf':'#fff';
+          const g = u.profile.gender==='male'?'<i class="fas fa-mars" style="color:#4da6ff;"></i>':u.profile.gender==='female'?'<i class="fas fa-venus" style="color:#ff80bf;"></i>':'';
+          const isCur = u.username===cur;
+          h += `<li class="leaderboard-item${isCur?' current-user':''}${isTop1?' top1-item':''}" style="border-color:${i<3?'#ffd700':'#1e90ff'}"><div class="leaderboard-rank ${isTop1?'top1':i===1?'top2':i===2?'top3':''}">#${i+1}</div><div><div class="leaderboard-name" style="color:${c}">${isTop1?'<span class="v-badge">'+vBadgeSVG+'</span>':''}<span class="rank-badge-icon badge-${r.badge}" style="margin-right:6px;">${r.icon}</span><span class="${r.class}">${u.profile.name}</span> ${g} ${isCur?' (You)':''}</div><div style="color:#ffd700;font-size:12px;"><i class="fas fa-star"></i> ${u.points} pts · ${r.name}</div></div></li>`;
+        });
+        list.innerHTML = h;
+      }
+    }
+
+    const visitorSystem = new VisitorSystem();
+
+    document.querySelectorAll('.tab-item').forEach(t=>{ t.addEventListener('click', function(){ document.querySelectorAll('.tab-item').forEach(x=>x.classList.remove('active')); this.classList.add('active'); const n=this.dataset.tab; if(n==='profile') openProfileModal(); else if(n==='leaderboard') openLeaderboardModal(); else if(n==='visitors') openVisitorModal(); }); });
+
+    window.closeModal = (id) => document.getElementById(id).classList.remove('active');
+    window.openAuthModal = () => document.getElementById('authModal').classList.add('active');
+    window.openVisitorModal = () => { visitorSystem.renderVisitors(); document.getElementById('visitorModal').classList.add('active'); };
+    window.openLeaderboardModal = () => { visitorSystem.renderLeaderboard(); document.getElementById('leaderboardModal').classList.add('active'); };
+    window.openProfileModal = () => {
+      const m=document.getElementById('profileModal'), a=document.getElementById('profileAuthRequired'), c=document.getElementById('profileContent');
+      if(!userSystem.isLoggedIn()) { a.style.display='block'; c.style.display='none'; }
+      else { a.style.display='none'; c.style.display='block'; const d=userSystem.getCurrent(); document.getElementById('currentUsername').textContent=userSystem.currentUser; document.getElementById('userTotalPoints').textContent=d.points; document.getElementById('userRankDisplay').textContent=getRankFromPoints(d.points).name; document.getElementById('userNameInput').value=d.profile.name; if(d.profile.gender) selectGender(d.profile.gender); }
+      m.classList.add('active');
+    };
+    window.switchAuthTab = (t) => {
+      document.querySelectorAll('.auth-tab').forEach(x=>x.classList.remove('active'));
+      document.querySelectorAll('.auth-form').forEach(x=>x.classList.remove('active'));
+      if(t==='register'){ document.querySelectorAll('.auth-tab')[0].classList.add('active'); document.getElementById('registerForm').classList.add('active'); }
+      else { document.querySelectorAll('.auth-tab')[1].classList.add('active'); document.getElementById('loginForm').classList.add('active'); }
+      document.getElementById('regError').textContent=''; document.getElementById('loginError').textContent='';
+    };
+    window.togglePassword = (id) => { const i=document.getElementById(id); i.type=i.type==='password'?'text':'password'; };
+    window.registerUser = () => {
+      const u=document.getElementById('regUsername').value, p=document.getElementById('regPassword').value, c=document.getElementById('regConfirmPassword').value, e=document.getElementById('regError');
+      if(p!==c) { e.textContent='PINs do not match'; return; }
+      try { userSystem.register(u,p); e.style.color='#2ecc71'; e.textContent='Success!'; setTimeout(()=>{ switchAuthTab('login'); document.getElementById('loginUsername').value=u; e.textContent=''; e.style.color='#ff6b9d'; },800); }
+      catch(err) { e.textContent=err.message; }
+    };
+    window.loginUser = () => {
+      const u=document.getElementById('loginUsername').value, p=document.getElementById('loginPassword').value, e=document.getElementById('loginError');
+      try { userSystem.login(u,p); closeModal('authModal'); visitorSystem.updateDisplay(); }
+      catch(err) { e.textContent=err.message; }
+    };
+    window.logout = () => { userSystem.logout(); closeModal('profileModal'); visitorSystem.updateDisplay(); };
+    window.selectGender = (g) => { document.getElementById('maleBtn').classList.remove('active'); document.getElementById('femaleBtn').classList.remove('active'); document.getElementById(g+'Btn').classList.add('active'); };
+    window.saveProfile = () => {
+      if(!userSystem.isLoggedIn()) return;
+      const n=document.getElementById('userNameInput').value.trim()||userSystem.currentUser;
+      const g=document.getElementById('maleBtn').classList.contains('active')?'male':document.getElementById('femaleBtn').classList.contains('active')?'female':null;
+      userSystem.updateProfile(n,g); visitorSystem.updateDisplay(); closeModal('profileModal');
     };
 
-    // ---------- API CONFIG ----------
-    const API_URL = 'https://social-download-all-in-one.p.rapidapi.com/v1/social/autolink';
-    const RAPIDAPI_KEY = 'f614ce5529msh2091e918b1bcc0ep1faf4ejsneddb5bf54e1c';
-    const RAPIDAPI_HOST = 'social-download-all-in-one.p.rapidapi.com';
+    document.querySelectorAll('.modal-overlay').forEach(m=>{ m.addEventListener('click',(e)=>{ if(e.target===m) m.classList.remove('active'); }); });
 
+    // YOUTUBE FIX - Using rapidapi with proper audio handling
+    const API_URL = 'https://social-download-all-in-one.p.rapidapi.com/v1/social/autolink';
+    const KEY = 'f614ce5529msh2091e918b1bcc0ep1faf4ejsneddb5bf54e1c';
+    
     const urlInput = document.getElementById('videoUrl');
     const fetchBtn = document.getElementById('fetchBtn');
     const pasteBtn = document.getElementById('pasteBtn');
     const statusArea = document.getElementById('statusArea');
-    const progressContainer = document.getElementById('progressContainer');
-    const progressFill = document.getElementById('progressFill');
-    const progressText = document.getElementById('progressText');
     const resultContainer = document.getElementById('resultContainer');
-    const thumbImg = document.getElementById('thumbImg');
-    const videoTitle = document.getElementById('videoTitle');
-    const authorName = document.getElementById('authorName');
-    const platformBadge = document.getElementById('platformBadge');
-    const mediaListContainer = document.getElementById('mediaListContainer');
-
-    let currentData = null;
-
-    function formatBytes(b) { if(!b) return ''; return (b/1048576).toFixed(1)+' MB'; }
-    function setStatus(html) { statusArea.innerHTML = html; }
-    function showLoader() { setStatus('<div class="loader"><div class="spinner"></div><span>Fetching media info...</span></div>'); }
-    function showError(msg) { setStatus(`<div class="error-message"><i class="fas fa-exclamation-triangle"></i> ${msg}</div>`); resultContainer.classList.add('hidden'); }
-    function clearResults() { resultContainer.classList.add('hidden'); mediaListContainer.innerHTML = ''; progressContainer.classList.add('hidden'); }
-
-    // Fetch file as Uint8Array
-    async function fetchFile(url) {
-      const response = await fetch(url);
-      if (!response.ok) throw new Error(`Failed to fetch: ${url}`);
-      const buffer = await response.arrayBuffer();
-      return new Uint8Array(buffer);
+    
+    function formatBytes(b) { if(!b)return''; return b>1048576?(b/1048576).toFixed(1)+' MB':b>1024?(b/1024).toFixed(0)+' KB':b+' B'; }
+    
+    function downloadFile(url, filename) {
+      const a=document.createElement('a'); a.href=url; a.download=filename; a.target='_blank'; document.body.appendChild(a); a.click(); setTimeout(()=>a.remove(),100);
+      const np=visitorSystem.addPoint();
+      statusArea.innerHTML=`<div style="color:#2ecc71;"><i class="fas fa-check-circle"></i> +1 point! Total: ${np} · Rank: ${getRankFromPoints(np).name}</div>`;
+      setTimeout(()=>statusArea.innerHTML='',2500);
     }
 
-    // Merge video + audio using FFmpeg
-    async function mergeVideoAudio(videoUrl, audioUrl, quality, onProgress) {
-      if (!ffmpegLoaded) {
-        const loaded = await loadFFmpeg();
-        if (!loaded) throw new Error('FFmpeg not available');
-      }
-
-      onProgress(10, 'Downloading video...');
-      const videoData = await fetchFile(videoUrl);
-      
-      onProgress(30, 'Downloading audio...');
-      const audioData = await fetchFile(audioUrl);
-      
-      onProgress(50, 'Merging with FFmpeg...');
-      
-      await ffmpeg.writeFile('input.mp4', videoData);
-      await ffmpeg.writeFile('audio.mp3', audioData);
-      
-      // Merge command
-      await ffmpeg.exec([
-        '-i', 'input.mp4',
-        '-i', 'audio.mp3',
-        '-c:v', 'copy',
-        '-c:a', 'aac',
-        '-map', '0:v:0',
-        '-map', '1:a:0',
-        '-shortest',
-        '-movflags', '+faststart',
-        `output_${quality}.mp4`
-      ]);
-      
-      onProgress(90, 'Finalizing...');
-      const outputData = await ffmpeg.readFile(`output_${quality}.mp4`);
-      
-      // Cleanup
-      await ffmpeg.deleteFile('input.mp4');
-      await ffmpeg.deleteFile('audio.mp3');
-      await ffmpeg.deleteFile(`output_${quality}.mp4`);
-      
-      return outputData;
-    }
-
-    // Download helper
-    function downloadBlob(data, filename) {
-      const blob = new Blob([data], { type: 'video/mp4' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    // Direct download (no merge)
-    function directDownload(url, filename) {
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      a.target = '_blank';
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(() => a.remove(), 150);
-    }
-
-    // Render media with merge capability
     function renderMedia(data) {
       const medias = data.medias || [];
-      const audioItems = medias.filter(m => m.type === 'audio');
-      const videoItems = medias.filter(m => m.type === 'video');
+      // FIXED: Properly separate video with audio and audio-only
+      const videoWithAudio = medias.filter(m => m.type === 'video' && m.url && !m.quality?.includes('audio'));
+      const audioOnly = medias.filter(m => m.type === 'audio' || m.extension === 'mp3' || m.quality?.includes('audio'));
       
-      thumbImg.src = data.thumbnail || 'https://placehold.co/400x400/0a1428/2ad4ff?text=NO+THUMB';
-      videoTitle.textContent = data.title || 'Video';
-      authorName.textContent = data.author ? `@${data.author}` : '@user';
-      platformBadge.textContent = data.source || 'social';
-
-      // Find best audio (prefer mp3)
-      const bestAudio = audioItems.length > 0 ? audioItems[0] : null;
-      const hasAudio = bestAudio !== null;
-
-      let html = '';
+      document.getElementById('thumbImg').src = data.thumbnail || 'https://placehold.co/400x400/0a1428/2ad4ff';
+      document.getElementById('videoTitle').textContent = data.title || 'Video';
+      document.getElementById('authorName').textContent = data.author || '@user';
+      document.getElementById('platformBadge').textContent = data.source || 'social';
       
-      videoItems.forEach((video, idx) => {
-        const quality = video.quality || 'video';
-        const label = quality.replace(/_/g, ' ').replace('no watermark', 'No WM').replace('hd', 'HD');
-        const sizeStr = formatBytes(video.data_size);
-        const canMerge = hasAudio && ffmpegLoaded;
-        
-        html += `
-          <div class="media-item" data-video-url="${video.url}" data-audio-url="${bestAudio?.url || ''}" data-quality="${quality}">
-            <div class="media-info">
-              <span class="quality-tag"><i class="fas fa-film"></i> ${label}</span>
-              <span class="file-meta">${video.extension || 'MP4'} ${sizeStr}</span>
-              ${hasAudio ? '<span class="audio-badge"><i class="fas fa-music"></i> +Audio ready</span>' : '<span class="audio-badge" style="background:#4a2a2a;border-color:#e74c3c;"><i class="fas fa-volume-mute"></i> No audio</span>'}
-            </div>
-            <div style="display:flex; gap:8px;">
-              <button class="download-btn direct-btn" data-url="${video.url}" data-filename="jack_${label}.mp4">
-                <i class="fas fa-download"></i> Direct
-              </button>
-              ${hasAudio ? `
-                <button class="download-btn merge-btn" data-video="${video.url}" data-audio="${bestAudio.url}" data-quality="${label}">
-                  <i class="fas fa-merge"></i> Merge+Audio
-                </button>
-              ` : ''}
-            </div>
-          </div>
-        `;
+      let h = '';
+      
+      // Sort videos by quality
+      videoWithAudio.sort((a,b) => {
+        const getQ = (q) => q?.includes('1080')?5:q?.includes('720')?4:q?.includes('480')?3:q?.includes('360')?2:1;
+        return getQ(b.quality) - getQ(a.quality);
       });
-
-      // Also show audio-only download
-      audioItems.forEach(audio => {
-        html += `
-          <div class="media-item">
-            <div class="media-info">
-              <span class="quality-tag" style="background:#3d1e6b;"><i class="fas fa-music"></i> Audio Only</span>
-              <span>MP3 ${formatBytes(audio.data_size)}</span>
-            </div>
-            <button class="download-btn" data-url="${audio.url}" data-filename="jack_audio.mp3">
-              <i class="fas fa-headphones"></i> Download
-            </button>
-          </div>
-        `;
-      });
-
-      if (videoItems.length === 0 && audioItems.length === 0) {
-        html = '<div class="media-item" style="justify-content:center;">✨ No media found</div>';
+      
+      // Display videos WITH audio
+      if (videoWithAudio.length > 0) {
+        h += '<div style="margin-bottom:15px;"><div style="color:#aad0ff;margin-bottom:10px;"><i class="fas fa-video"></i> Video + Audio</div>';
+        videoWithAudio.forEach(v => {
+          const quality = v.quality || 'Standard';
+          h += `<div class="video-item"><div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="background:#1a3a6a;padding:4px 12px;border-radius:20px;">${quality}</span><span>${formatBytes(v.data_size)}</span></div><button class="download-btn" data-url="${v.url}" data-filename="video_${quality}.mp4"><i class="fas fa-download"></i> Download Video+Audio (+1)</button></div>`;
+        });
+        h += '</div>';
       }
-
-      mediaListContainer.innerHTML = html;
-
-      // Attach listeners
-      document.querySelectorAll('.direct-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+      
+      // Display audio-only options
+      if (audioOnly.length > 0) {
+        h += '<div><div style="color:#c0a0ff;margin-bottom:10px;"><i class="fas fa-headphones"></i> Audio Only (MP3)</div>';
+        audioOnly.forEach(a => {
+          h += `<div class="audio-item"><span>MP3 · ${formatBytes(a.data_size)}</span><button class="download-btn" style="background:#4a1e6b;" data-url="${a.url}" data-filename="audio.mp3"><i class="fas fa-download"></i> Download Audio (+1)</button></div>`;
+        });
+        h += '</div>';
+      }
+      
+      if (!videoWithAudio.length && !audioOnly.length) {
+        h = '<div style="color:#8ab3ff;text-align:center;">No download options found. Try another link.</div>';
+      }
+      
+      document.getElementById('mediaListContainer').innerHTML = h;
+      document.querySelectorAll('.download-btn').forEach(b => {
+        b.addEventListener('click', (e) => {
           e.preventDefault();
-          directDownload(btn.dataset.url, btn.dataset.filename);
+          downloadFile(b.dataset.url, b.dataset.filename || 'download');
         });
       });
-
-      document.querySelectorAll('.merge-btn').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-          e.preventDefault();
-          const videoUrl = btn.dataset.video;
-          const audioUrl = btn.dataset.audio;
-          const quality = btn.dataset.quality;
-          const filename = `jack_${quality}_with_audio.mp4`;
-          
-          btn.disabled = true;
-          btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Merging...';
-          progressContainer.classList.remove('hidden');
-          
-          try {
-            const merged = await mergeVideoAudio(videoUrl, audioUrl, quality, (percent, text) => {
-              progressFill.style.width = percent + '%';
-              progressText.textContent = text;
-            });
-            
-            progressFill.style.width = '100%';
-            progressText.textContent = 'Complete!';
-            
-            downloadBlob(merged, filename);
-            
-            setTimeout(() => {
-              progressContainer.classList.add('hidden');
-              progressFill.style.width = '0%';
-            }, 1500);
-            
-          } catch (err) {
-            console.error('Merge failed:', err);
-            showError('Merge failed. Trying direct download...');
-            directDownload(videoUrl, filename.replace('_with_audio', '_direct'));
-          } finally {
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-merge"></i> Merge+Audio';
-          }
-        });
-      });
-
-      // Audio download buttons
-      document.querySelectorAll('.download-btn:not(.direct-btn):not(.merge-btn)').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const url = btn.dataset.url;
-          const fname = btn.dataset.filename;
-          if (url) directDownload(url, fname);
-        });
-      });
-
       resultContainer.classList.remove('hidden');
     }
 
     async function fetchMedia() {
       let url = urlInput.value.trim();
-      if(!url) { showError('Enter a video URL'); return; }
+      if(!url) { statusArea.innerHTML='<div class="error-message">Enter a URL</div>'; return; }
       if(!url.startsWith('http')) { url = 'https://'+url; urlInput.value=url; }
-      
-      clearResults();
-      showLoader();
+      resultContainer.classList.add('hidden');
+      statusArea.innerHTML='<div class="loader"><div class="spinner"></div><span>Fetching media...</span></div>';
       fetchBtn.disabled = true;
-
+      
       try {
         const res = await fetch(API_URL, {
-          method:'POST', 
-          headers:{
-            'Content-Type':'application/json',
-            'x-rapidapi-host':RAPIDAPI_HOST,
-            'x-rapidapi-key':RAPIDAPI_KEY
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-rapidapi-host': 'social-download-all-in-one.p.rapidapi.com',
+            'x-rapidapi-key': KEY
           },
           body: JSON.stringify({url})
         });
         
-        if(!res.ok) throw new Error(`API ${res.status}`);
+        if(!res.ok) throw new Error(`API Error: ${res.status}`);
         const data = await res.json();
-        if(data.error) throw new Error(data.message||'Unsupported');
+        if(data.error) throw new Error(data.message || 'Cannot download this video');
         
-        currentData = data;
-        setStatus('');
-        
-        // Pre-load FFmpeg in background
-        loadFFmpeg().catch(console.warn);
-        
+        statusArea.innerHTML = '';
         renderMedia(data);
         
       } catch(e) {
-        showError(e.message);
-        clearResults();
+        statusArea.innerHTML = `<div class="error-message"><i class="fas fa-exclamation-triangle"></i> ${e.message}</div>`;
+        resultContainer.classList.add('hidden');
       } finally {
         fetchBtn.disabled = false;
       }
     }
 
     fetchBtn.addEventListener('click', fetchMedia);
-    
-    pasteBtn.addEventListener('click', async () => {
-      try { 
-        const t = await navigator.clipboard.readText(); 
-        if(t) urlInput.value = t; 
-      } catch { 
-        alert('Clipboard access needed'); 
-      }
-    });
-    
-    urlInput.addEventListener('keypress', e => { 
-      if(e.key === 'Enter') fetchMedia(); 
-    });
-
+    pasteBtn.addEventListener('click', async () => { try { const t = await navigator.clipboard.readText(); if(t) urlInput.value = t; } catch {} });
+    urlInput.addEventListener('keypress', e => { if(e.key === 'Enter') fetchMedia(); });
+    urlInput.value = '';
   })();
 </script>
 </body>
