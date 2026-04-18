@@ -49,7 +49,6 @@
     .leaderboard-rank { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 16px; background: #1a3a6a; color: #fff; }
     .leaderboard-rank.top1 { background: linear-gradient(135deg, #ffd700, #ffaa00); color: #000; }
     .rank-badge-icon { width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 13px; margin: 0 4px; }
-    /* Rank Colors */
     .rank-silver { color: #c0c0c0 !important; text-shadow: 0 0 10px #c0c0c0; }
     .rank-gold { color: #ffd700 !important; text-shadow: 0 0 12px #ffd700; }
     .rank-platinum { color: #e5e4e2 !important; text-shadow: 0 0 12px #e5e4e2; }
@@ -102,9 +101,10 @@
     .audio-item { background: #1e1647; border-radius: 16px; padding: 12px 14px; border: 1px solid #9b4dff; display: flex; align-items: center; justify-content: space-between; }
     .loader { display: flex; align-items: center; gap: 12px; color: #b0e0ff; }
     .spinner { width: 20px; height: 20px; border: 2px solid #1e4970; border-top-color: #2ad4ff; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    .sync-status { font-size: 11px; color: #6a9fd8; margin-top: 5px; text-align: center; }
+    .refresh-btn { background: #1a3a6a; border: 1px solid #3eb5ff; color: white; padding: 6px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; margin-left: 8px; }
     @keyframes spin { to { transform: rotate(360deg); } }
     @media (max-width: 480px) { .gaming-card { padding: 18px 14px; } .neon-title { font-size: 2.2rem; } .tab-item { padding: 8px 16px; font-size: 0.9rem; } }
-    .download-option-btn { background: #1a3a6a; border: 1px solid #3eb5ff; color: white; padding: 10px 16px; border-radius: 25px; font-size: 0.9rem; cursor: pointer; margin: 5px; display: inline-block; }
   </style>
 </head>
 <body>
@@ -168,9 +168,13 @@
 
 <div class="modal-overlay" id="leaderboardModal">
   <div class="leaderboard-modal">
-    <div class="modal-header"><h2><i class="fas fa-crown"></i> Top Players</h2><button class="close-btn" onclick="closeModal('leaderboardModal')">&times;</button></div>
-    <div style="background:rgba(0,100,255,0.15);border-radius:12px;padding:10px;margin-bottom:15px;text-align:center;color:#fff;"><span id="totalPlayersCount">Loading...</span></div>
+    <div class="modal-header"><h2><i class="fas fa-crown"></i> Global Rankings</h2><button class="close-btn" onclick="closeModal('leaderboardModal')">&times;</button></div>
+    <div style="background:rgba(0,100,255,0.15);border-radius:12px;padding:10px;margin-bottom:15px;text-align:center;color:#fff;">
+      <span id="totalPlayersCount">Loading...</span>
+      <button class="refresh-btn" onclick="globalLeaderboard.fetchAndRender()"><i class="fas fa-sync-alt"></i> Refresh</button>
+    </div>
     <ul class="leaderboard-list" id="leaderboardList"></ul>
+    <div class="sync-status" id="syncStatus">🌍 Connected to Global Server</div>
   </div>
 </div>
 
@@ -214,12 +218,134 @@
       return { name: 'Bronze', badge: 'bronze', icon: '🥉', class: '' };
     }
 
+    // ========== GLOBAL LEADERBOARD SYSTEM (JSONBin.io) ==========
+    // YOUR CREDENTIALS INTEGRATED
+    class GlobalLeaderboard {
+      constructor() {
+        this.BIN_ID = '69e3bb8caaba882197126f6c';
+        this.API_KEY = '$2a$10$i.vY5neqb6zlAoLetMcKGu/jhGomEyG6CwdhbeQukCaHouLBOEL5G';
+        this.BASE_URL = 'https://api.jsonbin.io/v3/b';
+        this.users = [];
+        this.localUsers = JSON.parse(localStorage.getItem('su') || '{}');
+        this.syncInterval = null;
+        this.init();
+      }
+
+      async init() {
+        await this.fetchGlobalUsers();
+        this.startAutoSync();
+      }
+
+      async fetchGlobalUsers() {
+        try {
+          const res = await fetch(`${this.BASE_URL}/${this.BIN_ID}/latest`, {
+            headers: { 'X-Master-Key': this.API_KEY }
+          });
+          if (res.ok) {
+            const data = await res.json();
+            this.users = data.record.users || [];
+            document.getElementById('syncStatus').textContent = '🌍 Connected to Global Server';
+          }
+        } catch (e) {
+          console.log('Using local data');
+          document.getElementById('syncStatus').textContent = '⚠️ Working offline';
+        }
+        this.mergeLocalUsers();
+      }
+
+      mergeLocalUsers() {
+        Object.entries(this.localUsers).forEach(([username, data]) => {
+          const existing = this.users.find(u => u.username === username);
+          if (existing) {
+            existing.points = Math.max(existing.points, data.points || 0);
+            existing.profile = data.profile || existing.profile;
+          } else {
+            this.users.push({
+              username,
+              points: data.points || 0,
+              profile: data.profile || { name: username, gender: null }
+            });
+          }
+        });
+      }
+
+      async syncToCloud() {
+        try {
+          const res = await fetch(`${this.BASE_URL}/${this.BIN_ID}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Master-Key': this.API_KEY
+            },
+            body: JSON.stringify({ users: this.users })
+          });
+          if (res.ok) {
+            document.getElementById('syncStatus').textContent = '✓ Synced to Global Server';
+            setTimeout(() => document.getElementById('syncStatus').textContent = '🌍 Connected to Global Server', 2000);
+          }
+        } catch (e) {
+          document.getElementById('syncStatus').textContent = '⚠️ Working offline';
+        }
+      }
+
+      addPoint(username, points) {
+        const user = this.users.find(u => u.username === username);
+        if (user) {
+          user.points = points;
+        } else {
+          const localData = this.localUsers[username];
+          this.users.push({
+            username,
+            points,
+            profile: localData?.profile || { name: username, gender: null }
+          });
+        }
+        this.syncToCloud();
+      }
+
+      updateProfile(username, profile) {
+        const user = this.users.find(u => u.username === username);
+        if (user) {
+          user.profile = profile;
+        }
+        this.syncToCloud();
+      }
+
+      getAllUsers() {
+        return this.users.sort((a, b) => b.points - a.points);
+      }
+
+      startAutoSync() {
+        this.syncInterval = setInterval(() => {
+          this.fetchGlobalUsers();
+        }, 30000);
+      }
+
+      async fetchAndRender() {
+        document.getElementById('syncStatus').textContent = '🔄 Syncing...';
+        await this.fetchGlobalUsers();
+        visitorSystem.renderLeaderboard();
+        document.getElementById('syncStatus').textContent = '✓ Updated';
+        setTimeout(() => document.getElementById('syncStatus').textContent = '🌍 Connected to Global Server', 2000);
+      }
+    }
+
+    const globalLeaderboard = new GlobalLeaderboard();
+
     class SecureUserSystem {
       constructor() {
         this.users = JSON.parse(localStorage.getItem('su') || '{}');
         this.currentUser = localStorage.getItem('cu') || null;
       }
-      save() { localStorage.setItem('su', JSON.stringify(this.users)); }
+      save() { 
+        localStorage.setItem('su', JSON.stringify(this.users));
+        globalLeaderboard.users = Object.entries(this.users).map(([u, d]) => ({
+          username: u,
+          points: d.points || 0,
+          profile: d.profile || { name: u, gender: null }
+        }));
+        globalLeaderboard.syncToCloud();
+      }
       hash(p) { let h = 0; for(let i=0;i<p.length;i++) h = ((h<<5)-h)+p.charCodeAt(i); return h.toString(16); }
       register(u, p) {
         u = u.trim().toLowerCase();
@@ -238,15 +364,37 @@
       isLoggedIn() { return this.currentUser && this.users[this.currentUser]; }
       getCurrent() { return this.isLoggedIn() ? this.users[this.currentUser] : null; }
       addPoint() {
-        if(this.isLoggedIn()) { this.users[this.currentUser].points++; this.save(); return this.users[this.currentUser].points; }
-        let gp = parseInt(localStorage.getItem('gp')||'0')+1; localStorage.setItem('gp', gp);
+        if(this.isLoggedIn()) { 
+          this.users[this.currentUser].points++; 
+          this.save(); 
+          globalLeaderboard.addPoint(this.currentUser, this.users[this.currentUser].points);
+          return this.users[this.currentUser].points; 
+        }
+        let gp = parseInt(localStorage.getItem('gp')||'0')+1; 
+        localStorage.setItem('gp', gp);
         const gid = localStorage.getItem('vid')||'g'; 
-        if(!this.users['g_'+gid]) this.users['g_'+gid] = {points:gp, profile:{name:'Guest_'+gid.slice(-4),gender:null}, isGuest:true};
-        else this.users['g_'+gid].points = gp;
-        this.save(); return gp;
+        const guestName = 'g_' + gid;
+        if(!this.users[guestName]) this.users[guestName] = {points:gp, profile:{name:'Guest_'+gid.slice(-4),gender:null}, isGuest:true};
+        else this.users[guestName].points = gp;
+        this.save();
+        globalLeaderboard.addPoint(guestName, gp);
+        return gp;
       }
-      updateProfile(n, g) { if(this.isLoggedIn()) { this.users[this.currentUser].profile = {name:n, gender:g}; this.save(); } }
-      getAll() { return Object.entries(this.users).map(([u,d])=>({username:u, points:d.points||0, profile:d.profile||{name:u}, isGuest:d.isGuest})).sort((a,b)=>b.points-a.points); }
+      updateProfile(n, g) { 
+        if(this.isLoggedIn()) { 
+          this.users[this.currentUser].profile = {name:n, gender:g}; 
+          this.save(); 
+          globalLeaderboard.updateProfile(this.currentUser, {name:n, gender:g});
+        } 
+      }
+      getAll() { 
+        return Object.entries(this.users).map(([u,d])=>({
+          username:u, 
+          points:d.points||0, 
+          profile:d.profile||{name:u}, 
+          isGuest:d.isGuest
+        })).sort((a,b)=>b.points-a.points); 
+      }
     }
 
     const userSystem = new SecureUserSystem();
@@ -295,20 +443,31 @@
         list.innerHTML = h;
       }
       renderLeaderboard() {
-        const all = userSystem.getAll();
+        const all = globalLeaderboard.getAllUsers();
         const cur = userSystem.isLoggedIn() ? userSystem.currentUser : ('g_'+this.uid);
         const list = document.getElementById('leaderboardList');
-        document.getElementById('totalPlayersCount').innerHTML = `Players: ${all.length} | Your Rank: #${all.findIndex(u=>u.username===cur)+1||'N/A'}`;
+        document.getElementById('totalPlayersCount').innerHTML = `🌍 Global Players: ${all.length} | Your Rank: #${all.findIndex(u=>u.username===cur)+1||'N/A'}`;
         let h = '';
-        all.slice(0,50).forEach((u,i)=>{
+        all.slice(0, 50).forEach((u, i) => {
           const r = getRankFromPoints(u.points);
-          const isTop1 = i===0;
-          const c = u.profile.gender==='male'?'#4da6ff':u.profile.gender==='female'?'#ff80bf':'#fff';
-          const g = u.profile.gender==='male'?'<i class="fas fa-mars" style="color:#4da6ff;"></i>':u.profile.gender==='female'?'<i class="fas fa-venus" style="color:#ff80bf;"></i>':'';
-          const isCur = u.username===cur;
-          h += `<li class="leaderboard-item${isCur?' current-user':''}${isTop1?' top1-item':''}" style="border-color:${i<3?'#ffd700':'#1e90ff'}"><div class="leaderboard-rank ${isTop1?'top1':i===1?'top2':i===2?'top3':''}">#${i+1}</div><div><div class="leaderboard-name" style="color:${c}">${isTop1?'<span class="v-badge">'+vBadgeSVG+'</span>':''}<span class="rank-badge-icon badge-${r.badge}" style="margin-right:6px;">${r.icon}</span><span class="${r.class}">${u.profile.name}</span> ${g} ${isCur?' (You)':''}</div><div style="color:#ffd700;font-size:12px;"><i class="fas fa-star"></i> ${u.points} pts · ${r.name}</div></div></li>`;
+          const isTop1 = i === 0;
+          const c = u.profile?.gender === 'male' ? '#4da6ff' : u.profile?.gender === 'female' ? '#ff80bf' : '#fff';
+          const g = u.profile?.gender === 'male' ? '<i class="fas fa-mars" style="color:#4da6ff;"></i>' : u.profile?.gender === 'female' ? '<i class="fas fa-venus" style="color:#ff80bf;"></i>' : '';
+          const isCur = u.username === cur;
+          h += `<li class="leaderboard-item${isCur ? ' current-user' : ''}${isTop1 ? ' top1-item' : ''}" style="border-color:${i < 3 ? '#ffd700' : '#1e90ff'}">
+            <div class="leaderboard-rank ${isTop1 ? 'top1' : i === 1 ? 'top2' : i === 2 ? 'top3' : ''}">#${i + 1}</div>
+            <div style="flex:1">
+              <div class="leaderboard-name" style="color:${c}">
+                ${isTop1 ? '<span class="v-badge">' + vBadgeSVG + '</span>' : ''}
+                <span class="rank-badge-icon badge-${r.badge}" style="margin-right:6px;">${r.icon}</span>
+                <span class="${r.class}">${u.profile?.name || u.username}</span> ${g}
+                ${isCur ? ' (You)' : ''}
+              </div>
+              <div style="color:#ffd700;font-size:12px;"><i class="fas fa-star"></i> ${u.points} pts · ${r.name}</div>
+            </div>
+          </li>`;
         });
-        list.innerHTML = h;
+        list.innerHTML = h || '<div style="color:#8ab3ff;text-align:center;padding:20px;">No players yet. Be the first!</div>';
       }
     }
 
@@ -319,7 +478,7 @@
     window.closeModal = (id) => document.getElementById(id).classList.remove('active');
     window.openAuthModal = () => document.getElementById('authModal').classList.add('active');
     window.openVisitorModal = () => { visitorSystem.renderVisitors(); document.getElementById('visitorModal').classList.add('active'); };
-    window.openLeaderboardModal = () => { visitorSystem.renderLeaderboard(); document.getElementById('leaderboardModal').classList.add('active'); };
+    window.openLeaderboardModal = () => { globalLeaderboard.fetchAndRender(); document.getElementById('leaderboardModal').classList.add('active'); };
     window.openProfileModal = () => {
       const m=document.getElementById('profileModal'), a=document.getElementById('profileAuthRequired'), c=document.getElementById('profileContent');
       if(!userSystem.isLoggedIn()) { a.style.display='block'; c.style.display='none'; }
@@ -356,7 +515,7 @@
 
     document.querySelectorAll('.modal-overlay').forEach(m=>{ m.addEventListener('click',(e)=>{ if(e.target===m) m.classList.remove('active'); }); });
 
-    // YOUTUBE FIX - Using rapidapi with proper audio handling
+    // API
     const API_URL = 'https://social-download-all-in-one.p.rapidapi.com/v1/social/autolink';
     const KEY = 'f614ce5529msh2091e918b1bcc0ep1faf4ejsneddb5bf54e1c';
     
@@ -377,7 +536,6 @@
 
     function renderMedia(data) {
       const medias = data.medias || [];
-      // FIXED: Properly separate video with audio and audio-only
       const videoWithAudio = medias.filter(m => m.type === 'video' && m.url && !m.quality?.includes('audio'));
       const audioOnly = medias.filter(m => m.type === 'audio' || m.extension === 'mp3' || m.quality?.includes('audio'));
       
@@ -388,13 +546,11 @@
       
       let h = '';
       
-      // Sort videos by quality
       videoWithAudio.sort((a,b) => {
         const getQ = (q) => q?.includes('1080')?5:q?.includes('720')?4:q?.includes('480')?3:q?.includes('360')?2:1;
         return getQ(b.quality) - getQ(a.quality);
       });
       
-      // Display videos WITH audio
       if (videoWithAudio.length > 0) {
         h += '<div style="margin-bottom:15px;"><div style="color:#aad0ff;margin-bottom:10px;"><i class="fas fa-video"></i> Video + Audio</div>';
         videoWithAudio.forEach(v => {
@@ -404,7 +560,6 @@
         h += '</div>';
       }
       
-      // Display audio-only options
       if (audioOnly.length > 0) {
         h += '<div><div style="color:#c0a0ff;margin-bottom:10px;"><i class="fas fa-headphones"></i> Audio Only (MP3)</div>';
         audioOnly.forEach(a => {
