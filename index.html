@@ -48,6 +48,8 @@
     .leaderboard-item.top1-item { border: 2px solid #ffd700; background: rgba(255, 215, 0, 0.08); }
     .leaderboard-rank { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 16px; background: #1a3a6a; color: #fff; }
     .leaderboard-rank.top1 { background: linear-gradient(135deg, #ffd700, #ffaa00); color: #000; }
+    .leaderboard-rank.top2 { background: linear-gradient(135deg, #c0c0c0, #808080); color: #000; }
+    .leaderboard-rank.top3 { background: linear-gradient(135deg, #cd7f32, #8b4513); color: #fff; }
     .rank-badge-icon { width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 13px; margin: 0 4px; }
     .rank-silver { color: #c0c0c0 !important; text-shadow: 0 0 10px #c0c0c0; }
     .rank-gold { color: #ffd700 !important; text-shadow: 0 0 12px #ffd700; }
@@ -207,7 +209,7 @@
 
     const vBadgeSVG = `<svg width="22" height="22" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="url(#g)" stroke="#ffd700" stroke-width="2"/><defs><linearGradient id="g"><stop offset="0%" stop-color="#ffd700"/><stop offset="100%" stop-color="#ffaa00"/></linearGradient></defs><text x="20" y="28" font-size="22" font-weight="900" fill="#000" text-anchor="middle">V</text></svg>`;
 
-    // RANK SYSTEM
+    // RANK SYSTEM - Based purely on points
     function getRankFromPoints(points) {
       if (points >= 110) return { name: 'Grandmaster', badge: 'grandmaster', icon: '👑', class: 'rank-grandmaster' };
       if (points >= 80) return { name: 'Master', badge: 'master', icon: '⭐', class: 'rank-master' };
@@ -219,7 +221,6 @@
     }
 
     // ========== GLOBAL LEADERBOARD SYSTEM (JSONBin.io) ==========
-    // YOUR CREDENTIALS INTEGRATED
     class GlobalLeaderboard {
       constructor() {
         this.BIN_ID = '69e3bb8caaba882197126f6c';
@@ -257,6 +258,7 @@
         Object.entries(this.localUsers).forEach(([username, data]) => {
           const existing = this.users.find(u => u.username === username);
           if (existing) {
+            // Keep the higher points value
             existing.points = Math.max(existing.points, data.points || 0);
             existing.profile = data.profile || existing.profile;
           } else {
@@ -311,8 +313,35 @@
         this.syncToCloud();
       }
 
+      // CRITICAL FIX: Sort strictly by points (highest first)
       getAllUsers() {
-        return this.users.sort((a, b) => b.points - a.points);
+        // Remove duplicates and sort by points descending
+        const uniqueUsers = [];
+        const seen = new Set();
+        
+        this.users.forEach(user => {
+          if (!seen.has(user.username)) {
+            seen.add(user.username);
+            uniqueUsers.push(user);
+          }
+        });
+        
+        // STRICT SORTING BY POINTS (HIGHEST TO LOWEST)
+        return uniqueUsers.sort((a, b) => {
+          // Primary sort: points (highest first)
+          if (b.points !== a.points) {
+            return b.points - a.points;
+          }
+          // Secondary sort: username alphabetically for ties
+          return (a.username || '').localeCompare(b.username || '');
+        });
+      }
+
+      // Get user's global rank based on sorted list index
+      getUserGlobalRank(username) {
+        const sortedUsers = this.getAllUsers();
+        const index = sortedUsers.findIndex(u => u.username === username);
+        return index >= 0 ? index + 1 : null;
       }
 
       startAutoSync() {
@@ -339,12 +368,10 @@
       }
       save() { 
         localStorage.setItem('su', JSON.stringify(this.users));
-        globalLeaderboard.users = Object.entries(this.users).map(([u, d]) => ({
-          username: u,
-          points: d.points || 0,
-          profile: d.profile || { name: u, gender: null }
-        }));
-        globalLeaderboard.syncToCloud();
+        // Update global leaderboard with latest data
+        Object.entries(this.users).forEach(([u, d]) => {
+          globalLeaderboard.addPoint(u, d.points || 0);
+        });
       }
       hash(p) { let h = 0; for(let i=0;i<p.length;i++) h = ((h<<5)-h)+p.charCodeAt(i); return h.toString(16); }
       register(u, p) {
@@ -387,14 +414,6 @@
           globalLeaderboard.updateProfile(this.currentUser, {name:n, gender:g});
         } 
       }
-      getAll() { 
-        return Object.entries(this.users).map(([u,d])=>({
-          username:u, 
-          points:d.points||0, 
-          profile:d.profile||{name:u}, 
-          isGuest:d.isGuest
-        })).sort((a,b)=>b.points-a.points); 
-      }
     }
 
     const userSystem = new SecureUserSystem();
@@ -403,7 +422,7 @@
       constructor() {
         this.visitors = new Map();
         this.uid = localStorage.getItem('vid') || (()=>{const i='v_'+Date.now()+'_'+Math.random().toString(36).substr(2,4); localStorage.setItem('vid',i); return i;})();
-        this.ch = new BroadcastChannel('vc2');
+        this.ch = new BroadcastChannel('vc3');
         this.setup();
         this.updateCount();
       }
@@ -443,30 +462,51 @@
         list.innerHTML = h;
       }
       renderLeaderboard() {
-        const all = globalLeaderboard.getAllUsers();
+        // CRITICAL: Use strictly sorted global users
+        const allUsers = globalLeaderboard.getAllUsers();
         const cur = userSystem.isLoggedIn() ? userSystem.currentUser : ('g_'+this.uid);
         const list = document.getElementById('leaderboardList');
-        document.getElementById('totalPlayersCount').innerHTML = `🌍 Global Players: ${all.length} | Your Rank: #${all.findIndex(u=>u.username===cur)+1||'N/A'}`;
+        
+        // Get current user's global rank
+        const userRank = globalLeaderboard.getUserGlobalRank(cur);
+        
+        document.getElementById('totalPlayersCount').innerHTML = `🌍 Global Players: ${allUsers.length} | Your Rank: #${userRank || 'N/A'}`;
+        
         let h = '';
-        all.slice(0, 50).forEach((u, i) => {
-          const r = getRankFromPoints(u.points);
-          const isTop1 = i === 0;
-          const c = u.profile?.gender === 'male' ? '#4da6ff' : u.profile?.gender === 'female' ? '#ff80bf' : '#fff';
-          const g = u.profile?.gender === 'male' ? '<i class="fas fa-mars" style="color:#4da6ff;"></i>' : u.profile?.gender === 'female' ? '<i class="fas fa-venus" style="color:#ff80bf;"></i>' : '';
-          const isCur = u.username === cur;
-          h += `<li class="leaderboard-item${isCur ? ' current-user' : ''}${isTop1 ? ' top1-item' : ''}" style="border-color:${i < 3 ? '#ffd700' : '#1e90ff'}">
-            <div class="leaderboard-rank ${isTop1 ? 'top1' : i === 1 ? 'top2' : i === 2 ? 'top3' : ''}">#${i + 1}</div>
+        // Display top 50 users with proper ranking based on sorted position
+        allUsers.slice(0, 50).forEach((u, index) => {
+          // Rank is index + 1 (since array is sorted by points)
+          const rank = index + 1;
+          const rankInfo = getRankFromPoints(u.points);
+          const isTop1 = rank === 1;
+          const isTop2 = rank === 2;
+          const isTop3 = rank === 3;
+          
+          const nameColor = u.profile?.gender === 'male' ? '#4da6ff' : u.profile?.gender === 'female' ? '#ff80bf' : '#fff';
+          const genderIcon = u.profile?.gender === 'male' ? '<i class="fas fa-mars" style="color:#4da6ff;"></i>' : 
+                            u.profile?.gender === 'female' ? '<i class="fas fa-venus" style="color:#ff80bf;"></i>' : '';
+          const isCurrentUser = u.username === cur;
+          
+          // Rank class for styling
+          let rankClass = '';
+          if (isTop1) rankClass = 'top1';
+          else if (isTop2) rankClass = 'top2';
+          else if (isTop3) rankClass = 'top3';
+          
+          h += `<li class="leaderboard-item${isCurrentUser ? ' current-user' : ''}${isTop1 ? ' top1-item' : ''}" style="border-color:${rank <= 3 ? '#ffd700' : '#1e90ff'}">
+            <div class="leaderboard-rank ${rankClass}">#${rank}</div>
             <div style="flex:1">
-              <div class="leaderboard-name" style="color:${c}">
+              <div class="leaderboard-name" style="color:${nameColor}">
                 ${isTop1 ? '<span class="v-badge">' + vBadgeSVG + '</span>' : ''}
-                <span class="rank-badge-icon badge-${r.badge}" style="margin-right:6px;">${r.icon}</span>
-                <span class="${r.class}">${u.profile?.name || u.username}</span> ${g}
-                ${isCur ? ' (You)' : ''}
+                <span class="rank-badge-icon badge-${rankInfo.badge}" style="margin-right:6px;">${rankInfo.icon}</span>
+                <span class="${rankInfo.class}">${u.profile?.name || u.username}</span> ${genderIcon}
+                ${isCurrentUser ? ' (You)' : ''}
               </div>
-              <div style="color:#ffd700;font-size:12px;"><i class="fas fa-star"></i> ${u.points} pts · ${r.name}</div>
+              <div style="color:#ffd700;font-size:12px;"><i class="fas fa-star"></i> ${u.points} pts · ${rankInfo.name}</div>
             </div>
           </li>`;
         });
+        
         list.innerHTML = h || '<div style="color:#8ab3ff;text-align:center;padding:20px;">No players yet. Be the first!</div>';
       }
     }
